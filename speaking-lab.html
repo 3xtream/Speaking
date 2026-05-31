@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speaking Lab — English Acquisition System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ─── RESET & ROOT ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --p:     #6C63FF;
+  --pd:    #4F46E5;
+  --pl:    #EAE9FF;
+  --pl2:   #F5F3FF;
+  --ok:    #22C55E;
+  --okl:   #DCFCE7;
+  --warn:  #F59E0B;
+  --warnl: #FEF3C7;
+  --err:   #EF4444;
+  --errl:  #FEE2E2;
+  --tx:    #1E1B4B;
+  --txm:   #6B7280;
+  --bd:    #E5E7EB;
+  --bg:    #F5F3FF;
+  --card:  #FFFFFF;
+  --r:     14px;
+  --rs:    10px;
+  --sh:    0 2px 12px rgba(108,99,255,.10);
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--tx);
+  min-height: 100vh;
+  font-size: 14px;
+}
+
+/* ─── HEADER ────────────────────────────────────── */
+.top-bar {
+  background: linear-gradient(135deg, var(--p) 0%, var(--pd) 100%);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(79,70,229,.25);
+}
+.top-bar-left { display: flex; align-items: center; gap: 10px; }
+.top-bar-logo {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,.2);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.top-bar-title { font-size: 17px; font-weight: 700; color: #fff; }
+.top-bar-sub   { font-size: 11px; color: #C7D2FE; margin-top: 1px; }
+.top-bar-scores { display: flex; gap: 18px; }
+.score-item { display: flex; flex-direction: column; align-items: center; color: #fff; }
+.score-item .sv { font-size: 20px; font-weight: 800; line-height: 1; }
+.score-item .sl { font-size: 9px; color: #C7D2FE; text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
+
+/* ─── AUTH BANNER ───────────────────────────────── */
+#authBanner {
+  background: var(--warnl);
+  border-bottom: 1.5px solid #FDE68A;
+  padding: 10px 20px;
+  font-size: 13px;
+  color: #92400E;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#authBanner a {
+  color: #92400E;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+#authBanner.ok {
+  background: var(--okl);
+  border-color: #86EFAC;
+  color: #166534;
+}
+#authBanner.hidden { display: none; }
+
+/* ─── MAIN LAYOUT ────────────────────────────────── */
+main {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ─── CARD BASE ─────────────────────────────────── */
+.card {
+  background: var(--card);
+  border-radius: var(--r);
+  padding: 18px 20px;
+  border: 1px solid var(--bd);
+  box-shadow: var(--sh);
+}
+
+/* ─── API KEY CARD ──────────────────────────────── */
+.key-card { border: 1.5px solid #C7D2FE; background: #FAFAFE; }
+.key-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.key-icon { width: 34px; height: 34px; background: var(--pl); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--p); font-size: 15px; flex-shrink: 0; }
+.key-title { font-size: 14px; font-weight: 600; }
+.key-sub   { font-size: 11px; color: var(--txm); margin-top: 1px; }
+.key-row   { display: flex; gap: 8px; }
+.key-wrap  { position: relative; flex: 1; }
+.key-input { width: 100%; padding: 10px 38px 10px 12px; border: 1.5px solid var(--bd); border-radius: var(--rs); font-size: 13px; font-family: inherit; color: var(--tx); background: #fff; outline: none; transition: border-color .2s; }
+.key-input:focus  { border-color: var(--p); }
+.key-input.saved  { border-color: var(--ok); background: #F0FDF4; }
+.key-eye  { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--txm); font-size: 14px; padding: 4px; }
+.key-save { padding: 10px 14px; background: var(--p); color: #fff; border: none; border-radius: var(--rs); font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 6px; white-space: nowrap; transition: background .2s; flex-shrink: 0; }
+.key-save:hover { background: var(--pd); }
+.key-status { margin-top: 8px; font-size: 11px; display: flex; align-items: center; gap: 5px; }
+.key-status.ok   { color: #166534; }
+.key-status.warn { color: #92400E; }
+.key-status.none { color: var(--txm); }
+
+/* ─── TOPIC / DIFF ─────────────────────────────── */
+.row-label { font-size: 11px; font-weight: 600; color: var(--txm); text-transform: uppercase; letter-spacing: .07em; width: 100%; margin-bottom: 2px; }
+.chip-group { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 10px; }
+.chip {
+  padding: 6px 13px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1.5px solid var(--bd);
+  background: #fff;
+  color: var(--txm);
+  transition: all .18s;
+  font-family: inherit;
+}
+.chip:hover { border-color: var(--p); color: var(--p); }
+.chip.active { background: var(--p); color: #fff; border-color: var(--p); }
+
+.diff-row { display: flex; gap: 7px; align-items: center; flex-wrap: wrap; }
+.diff-lbl { font-size: 11px; font-weight: 600; color: var(--txm); text-transform: uppercase; letter-spacing: .07em; }
+.diff-chip { padding: 5px 12px; border-radius: 99px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1.5px solid var(--bd); background: #fff; transition: all .18s; font-family: inherit; }
+.diff-chip[data-diff="easy"]   { color: #166534; }
+.diff-chip[data-diff="medium"] { color: #92400E; }
+.diff-chip[data-diff="hard"]   { color: #991B1B; }
+.diff-chip[data-diff="easy"].active   { background: var(--okl); border-color: #86EFAC; }
+.diff-chip[data-diff="medium"].active { background: var(--warnl); border-color: #FDE68A; }
+.diff-chip[data-diff="hard"].active   { background: var(--errl); border-color: #FECACA; }
+
+.gen-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px;
+  background: var(--p);
+  color: #fff;
+  border: none;
+  border-radius: var(--rs);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background .2s, opacity .2s;
+}
+.gen-btn:hover   { background: var(--pd); }
+.gen-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+/* ─── PROGRESS ──────────────────────────────────── */
+.prog-wrap  { display: flex; align-items: center; gap: 12px; }
+.prog-bg    { flex: 1; height: 6px; background: #E5E7EB; border-radius: 99px; overflow: hidden; }
+.prog-fill  { height: 100%; background: var(--p); border-radius: 99px; transition: width .4s ease; }
+.prog-label { font-size: 12px; color: var(--txm); white-space: nowrap; font-weight: 500; }
+
+/* ─── PRACTICE CARD ─────────────────────────────── */
+.practice { position: relative; overflow: hidden; }
+.practice::before { content: ''; position: absolute; top: -30px; right: -30px; width: 110px; height: 110px; background: var(--pl); border-radius: 50%; opacity: .45; pointer-events: none; }
+.cat-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--p);
+  background: var(--pl);
+  padding: 4px 10px;
+  border-radius: 99px;
+  margin-bottom: 14px;
+}
+.ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--pd);
+  background: linear-gradient(135deg,#EAE9FF,#E0E7FF);
+  padding: 3px 8px;
+  border-radius: 99px;
+  border: 1px solid #C7D2FE;
+  margin-left: 5px;
+}
+.sentence {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--tx);
+  margin-bottom: 14px;
+  min-height: 62px;
+}
+.hint-row { font-size: 12px; color: var(--txm); display: flex; align-items: flex-start; gap: 6px; }
+
+/* ─── MIC VISUALIZER ─────────────────────────────── */
+.mic-vis {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 32px;
+  margin: 8px 0 4px;
+}
+.mic-vis.show { display: flex; }
+.mic-bar {
+  width: 4px;
+  border-radius: 99px;
+  background: var(--err);
+  animation: mic-bounce var(--d, .8s) ease-in-out infinite alternate;
+  height: 8px;
+}
+@keyframes mic-bounce { from{height:4px} to{height:var(--h,24px)} }
+
+/* ─── TRANSCRIPT ─────────────────────────────────── */
+.trans-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--txm); margin-bottom: 7px; }
+.trans-box {
+  background: #F9FAFB;
+  border: 1.5px dashed var(--bd);
+  border-radius: var(--rs);
+  padding: 13px 15px;
+  font-size: 15px;
+  color: var(--txm);
+  min-height: 54px;
+  line-height: 1.6;
+  transition: border-color .3s;
+  word-break: break-word;
+}
+.trans-box.live { color: var(--tx); border-color: var(--err); border-style: solid; background: #FFF5F5; }
+.trans-box.done { color: var(--tx); border-color: var(--p); border-style: solid; background: #fff; }
+
+/* ─── STATUS BADGE ───────────────────────────────── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 13px;
+  border-radius: 99px;
+  border: 1.5px solid transparent;
+  transition: all .3s;
+}
+.st-idle       { background: #F3F4F6; color: var(--txm); border-color: var(--bd); }
+.st-listening  { background: #FEF2F2; color: #DC2626; border-color: #FECACA; animation: pulse .9s infinite; }
+.st-processing { background: var(--warnl); color: #92400E; border-color: #FDE68A; }
+.st-done       { background: var(--okl); color: #166534; border-color: #86EFAC; }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.03)} }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.dot.blink { animation: blink .9s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ─── FEEDBACK ───────────────────────────────────── */
+.feedback {
+  border-radius: var(--rs);
+  padding: 14px 16px;
+  display: none;
+  animation: fadein .35s ease;
+}
+.feedback.show { display: block; }
+.fb-p { background: var(--okl);  border: 1.5px solid #86EFAC; }
+.fb-g { background: var(--warnl);border: 1.5px solid #FDE68A; }
+.fb-k { background: var(--errl); border: 1.5px solid #FECACA; }
+.fb-title { font-size: 16px; font-weight: 700; margin-bottom: 5px; }
+.fb-p .fb-title { color: #166534; }
+.fb-g .fb-title { color: #92400E; }
+.fb-k .fb-title { color: #991B1B; }
+.fb-body  { font-size: 13px; line-height: 1.7; }
+.fb-p .fb-body { color: #166534; }
+.fb-g .fb-body { color: #92400E; }
+.fb-k .fb-body { color: #991B1B; }
+.fw { font-weight: 700; text-decoration: underline; }
+@keyframes fadein { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+
+/* ─── BUTTONS ─────────────────────────────────────── */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.sp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 13px 18px;
+  border-radius: var(--rs);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: transform .15s, opacity .2s, background .2s;
+  font-family: inherit;
+}
+.sp-btn:active   { transform: scale(.97); }
+.sp-btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn-rec  { flex: 1; background: var(--p); color: #fff; min-width: 150px; }
+.btn-rec:hover:not(:disabled) { background: var(--pd); }
+.btn-rec.on  { background: var(--err); }
+.btn-rec.on:hover { background: #DC2626; }
+.btn-list { background: var(--pl); color: var(--pd); flex-shrink: 0; }
+.btn-list:hover:not(:disabled) { background: #D1D0FF; }
+.btn-next { flex: 1; background: #F3F4F6; color: var(--tx); min-width: 110px; }
+.btn-next:hover:not(:disabled) { background: var(--bd); }
+
+/* ─── SKELETON ───────────────────────────────────── */
+.skel { height: 18px; background: linear-gradient(90deg,#e8e6f8 25%,#d4d0f5 50%,#e8e6f8 75%); background-size: 200% 100%; animation: shim 1.4s infinite; border-radius: 6px; margin-bottom: 10px; }
+.spin { width: 16px; height: 16px; border: 2.5px solid #C7D2FE; border-top-color: var(--p); border-radius: 50%; animation: sp 0.7s linear infinite; flex-shrink: 0; }
+@keyframes sp  { to{transform:rotate(360deg)} }
+@keyframes shim{ 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+/* ─── ERROR / INSTRUCTIONS ───────────────────────── */
+.err-box { background: var(--errl); border: 1.5px solid #FECACA; border-radius: var(--rs); padding: 12px 15px; color: #991B1B; font-size: 13px; display: none; gap: 8px; align-items: flex-start; }
+.err-box.show { display: flex; }
+.instr { background: var(--pl); border-radius: var(--rs); padding: 14px 16px; font-size: 12.5px; color: var(--pd); line-height: 1.8; }
+.instr strong { font-weight: 700; }
+
+/* ─── SESSION CARD ───────────────────────────────── */
+.session-card { border: 1.5px solid #C7D2FE; background: #F8F7FF; border-radius: var(--r); padding: 14px 18px; display: flex; align-items: center; gap: 12px; }
+.session-avatar { width: 38px; height: 38px; background: var(--p); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; flex-shrink: 0; }
+.session-name  { font-size: 14px; font-weight: 600; color: var(--tx); }
+.session-email { font-size: 11px; color: var(--txm); margin-top: 1px; }
+.session-badge { margin-left: auto; background: var(--okl); color: #166534; border: 1px solid #86EFAC; border-radius: 99px; padding: 3px 10px; font-size: 11px; font-weight: 600; }
+
+/* ─── TOAST ──────────────────────────────────────── */
+.toast { position: fixed; top: 70px; left: 50%; transform: translateX(-50%) translateY(-16px); background: var(--p); color: #fff; font-size: 17px; font-weight: 700; padding: 9px 22px; border-radius: 99px; opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; z-index: 9999; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ─── EMPTY STATE ────────────────────────────────── */
+.empty-state { text-align: center; padding: 22px 0; color: var(--txm); }
+.empty-state i { font-size: 30px; color: #C7D2FE; display: block; margin-bottom: 10px; }
+.empty-state .et { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+.empty-state .es { font-size: 12px; }
+
+@media(max-width:480px){
+  .sentence { font-size: 18px; }
+  .sp-btn { font-size: 13px; padding: 11px 14px; }
+  .top-bar-title { font-size: 15px; }
+  .score-item .sv { font-size: 17px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="top-bar-logo"><i class="fa-solid fa-microphone-lines"></i></div>
+    <div>
+      <div class="top-bar-title">Speaking Lab</div>
+      <div class="top-bar-sub">AI-Powered English Practice · Gemini Flash</div>
+    </div>
+  </div>
+  <div class="top-bar-scores">
+    <div class="score-item"><span class="sv" id="sPts">0</span><span class="sl">Points</span></div>
+    <div class="score-item"><span class="sv" id="sPerf">0</span><span class="sl">Perfect</span></div>
+    <div class="score-item"><span class="sv" id="sStrk">0</span><span class="sl">Streak 🔥</span></div>
+  </div>
+</div>
+
+<!-- AUTH BANNER -->
+<div id="authBanner">
+  <i class="fa-solid fa-triangle-exclamation"></i>
+  <span id="authBannerMsg">Mendeteksi sesi login dari aplikasi utama...</span>
+</div>
+
+<main>
+
+  <!-- SESSION INFO -->
+  <div class="session-card" id="sessionCard" style="display:none">
+    <div class="session-avatar"><i class="fa-solid fa-user"></i></div>
+    <div>
+      <div class="session-name" id="sessionName">—</div>
+      <div class="session-email" id="sessionEmail">—</div>
+    </div>
+    <div class="session-badge"><i class="fa-solid fa-shield-check"></i> Verified</div>
+  </div>
+
+  <!-- GEMINI API KEY -->
+  <div class="card key-card">
+    <div class="key-header">
+      <div class="key-icon"><i class="fa-solid fa-key"></i></div>
+      <div>
+        <div class="key-title">Google Gemini API Key</div>
+        <div class="key-sub">Untuk generate kalimat latihan secara dinamis via AI</div>
+      </div>
+    </div>
+    <div class="key-row">
+      <div class="key-wrap">
+        <input type="password" id="keyInput" class="key-input" placeholder="Masukkan Gemini API Key Anda..." autocomplete="off" spellcheck="false">
+        <button class="key-eye" id="keyEye" type="button"><i class="fa-regular fa-eye" id="keyEyeIc"></i></button>
+      </div>
+      <button class="key-save" id="keySave"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+    </div>
+    <div class="key-status none" id="keyStatus">
+      <i class="fa-solid fa-circle-info"></i>
+      <span>Dapatkan API Key gratis di <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:inherit;font-weight:700">aistudio.google.com</a></span>
+    </div>
+  </div>
+
+  <!-- TOPIC & DIFFICULTY -->
+  <div class="card">
+    <div class="row-label"><i class="fa-solid fa-tags" style="margin-right:5px"></i>Topik Latihan</div>
+    <div class="chip-group" id="topicGroup">
+      <button class="chip active" data-topic="Daily Conversation">💬 Daily Talk</button>
+      <button class="chip" data-topic="Travel & Tourism">✈️ Travel</button>
+      <button class="chip" data-topic="Business English">💼 Business</button>
+      <button class="chip" data-topic="Academic English">🎓 Academic</button>
+      <button class="chip" data-topic="Storytelling">📖 Story</button>
+      <button class="chip" data-topic="Debate & Opinion">🗣️ Opinion</button>
+    </div>
+    <div class="diff-row">
+      <span class="diff-lbl"><i class="fa-solid fa-layer-group" style="margin-right:4px"></i>Level</span>
+      <div id="diffGroup" style="display:flex;gap:7px">
+        <button class="diff-chip active" data-diff="easy">Easy</button>
+        <button class="diff-chip" data-diff="medium">Medium</button>
+        <button class="diff-chip" data-diff="hard">Hard</button>
+      </div>
+    </div>
+    <button class="gen-btn" id="genBtn" disabled>
+      <i class="fa-solid fa-wand-magic-sparkles"></i> Generate dengan Gemini AI
+    </button>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="card" style="padding:13px 18px">
+    <div class="prog-wrap">
+      <div class="prog-bg"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+      <span class="prog-label" id="progLbl">0 / 0</span>
+    </div>
+  </div>
+
+  <!-- ERROR BANNER -->
+  <div class="err-box" id="errBox">
+    <i class="fa-solid fa-circle-exclamation" style="margin-top:1px;flex-shrink:0"></i>
+    <span id="errMsg"></span>
+  </div>
+
+  <!-- PRACTICE CARD -->
+  <div class="card practice" id="practiceCard">
+    <div class="empty-state">
+      <i class="fa-solid fa-wand-magic-sparkles"></i>
+      <div class="et">Siap Berlatih?</div>
+      <div class="es">Simpan API key, pilih topik & level,<br>lalu klik <strong>Generate dengan Gemini AI</strong>.</div>
+    </div>
+  </div>
+
+  <!-- SPEECH CARD -->
+  <div class="card" id="speechCard" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+      <span class="trans-lbl">Your speech</span>
+      <span class="status-badge st-idle" id="statusBadge">
+        <span class="dot" id="statusDot"></span>
+        <span id="statusTxt">Idle</span>
+      </span>
+    </div>
+    <!-- Live mic visualizer bars -->
+    <div class="mic-vis" id="micVis">
+      <div class="mic-bar" style="--d:.55s;--h:22px"></div>
+      <div class="mic-bar" style="--d:.7s;--h:28px"></div>
+      <div class="mic-bar" style="--d:.5s;--h:18px"></div>
+      <div class="mic-bar" style="--d:.8s;--h:30px"></div>
+      <div class="mic-bar" style="--d:.6s;--h:24px"></div>
+      <div class="mic-bar" style="--d:.45s;--h:20px"></div>
+      <div class="mic-bar" style="--d:.75s;--h:26px"></div>
+      <div class="mic-bar" style="--d:.5s;--h:16px"></div>
+    </div>
+    <div class="trans-box" id="transBox">Press "Start Speaking" and read the sentence aloud...</div>
+  </div>
+
+  <!-- FEEDBACK -->
+  <div class="feedback" id="feedbackBox">
+    <div class="fb-title" id="fbTitle"></div>
+    <div class="fb-body" id="fbBody"></div>
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="btn-row" id="actBtns" style="display:none">
+    <button class="sp-btn btn-rec" id="recBtn">
+      <i class="fa-solid fa-microphone" id="recIcon"></i>
+      <span id="recTxt">Start Speaking</span>
+    </button>
+    <button class="sp-btn btn-list" id="listenBtn">
+      <i class="fa-solid fa-volume-high"></i> Listen
+    </button>
+  </div>
+  <div class="btn-row" id="nextRow" style="display:none">
+    <button class="sp-btn btn-next" id="nextBtn">
+      Next Sentence <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </div>
+
+  <!-- INSTRUCTIONS -->
+  <div class="instr">
+    <strong><i class="fa-solid fa-circle-info"></i> Cara Pakai Speaking Lab:</strong><br>
+    1. Login dari aplikasi utama (sesi otomatis terdeteksi).<br>
+    2. Masukkan Gemini API Key &amp; klik <strong>Simpan</strong>.<br>
+    3. Pilih topik dan level, klik <strong>Generate</strong>.<br>
+    4. Klik <strong>Start Speaking</strong> lalu ucapkan kalimat dengan jelas.<br>
+    5. Klik <strong>Listen</strong> untuk dengar contoh pengucapan benar.<br>
+    6. Klik <strong>Next</strong> untuk lanjut ke kalimat berikutnya. 🔥<br><br>
+    <i class="fa-solid fa-shield-halved"></i> <strong>Privasi:</strong> API Key hanya tersimpan di browser Anda. Suara Anda diproses lokal oleh Web Speech API — tidak dikirim ke server mana pun.
+  </div>
+
+</main>
+
+<div class="toast" id="toast">+10 pts 🎉</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════
+let sentences=[], idx=0, rec=null, interim='', pts=0, perf=0, strk=0;
+let gemKey='', topic='Daily Conversation', diff='easy', generating=false, recording=false;
+let sessionUser = null; // { email, fullName, token } from GAS parent
+
+// ═══════════════════════════════════════════════════════
+//  SESSION — read from URL hash OR postMessage from parent
+// ═══════════════════════════════════════════════════════
+function initSession() {
+  // 1. Try URL hash: speaking-lab.html#token=TOKEN&email=EMAIL&name=NAME
+  const hash = window.location.hash.slice(1);
+  if (hash) {
+    const p = new URLSearchParams(hash);
+    const token = p.get('token'), email = p.get('email'), name = p.get('name');
+    if (token && email) {
+      setSession({ token, email, fullName: decodeURIComponent(name || '') });
+      // Clean URL hash for security (token not visible in address bar)
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      return;
+    }
+  }
+
+  // 2. Try postMessage from parent iframe
+  window.addEventListener('message', (e) => {
+    // Allow messages from any origin since GAS URL varies per deployment
+    if (e.data && e.data.type === 'SPEAKING_LAB_SESSION') {
+      setSession(e.data.payload);
+    }
+  });
+
+  // 3. Try localStorage (persisted from previous session handoff)
+  const stored = localStorage.getItem('sp_lab_session');
+  if (stored) {
+    try {
+      const s = JSON.parse(stored);
+      if (s && s.email && s.token && Date.now() < (s.exp || 0)) {
+        setSession(s);
+        return;
+      }
+      localStorage.removeItem('sp_lab_session');
+    } catch(e) {}
+  }
+
+  // No session found
+  setAuthBanner('warn', '<i class="fa-solid fa-triangle-exclamation"></i> Buka Speaking Lab dari tombol di aplikasi utama agar sesi terdeteksi otomatis.');
+}
+
+function setSession(s) {
+  sessionUser = s;
+  // Persist with 6-hour expiry
+  localStorage.setItem('sp_lab_session', JSON.stringify({ ...s, exp: Date.now() + 6*60*60*1000 }));
+  document.getElementById('sessionCard').style.display = 'flex';
+  document.getElementById('sessionName').textContent  = s.fullName || s.email;
+  document.getElementById('sessionEmail').textContent = s.email;
+  setAuthBanner('ok', `<i class="fa-solid fa-circle-check"></i> Sesi terverifikasi sebagai <strong>${s.fullName || s.email}</strong>`);
+}
+
+function setAuthBanner(type, html) {
+  const b = document.getElementById('authBanner');
+  b.className = type === 'ok' ? 'ok' : '';
+  b.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════
+//  API KEY
+// ═══════════════════════════════════════════════════════
+function loadKey() {
+  const s = localStorage.getItem('splab_gemini_key');
+  if (s) { gemKey = s; document.getElementById('keyInput').value = s; document.getElementById('keyInput').classList.add('saved'); setKeyStatus('ok','<i class="fa-solid fa-circle-check"></i> API Key tersimpan — siap digunakan!'); document.getElementById('genBtn').disabled = false; }
+}
+function setKeyStatus(t, h) { const e = document.getElementById('keyStatus'); e.className = 'key-status '+t; e.innerHTML = h; }
+
+document.getElementById('keySave').onclick = () => {
+  const v = document.getElementById('keyInput').value.trim();
+  if (!v) { setKeyStatus('warn','<i class="fa-solid fa-triangle-exclamation"></i> Masukkan API Key dulu.'); return; }
+  gemKey = v; localStorage.setItem('splab_gemini_key', v);
+  document.getElementById('keyInput').classList.add('saved');
+  setKeyStatus('ok','<i class="fa-solid fa-circle-check"></i> Tersimpan di browser!');
+  document.getElementById('genBtn').disabled = false;
+  const b = document.getElementById('keySave'); b.innerHTML = '<i class="fa-solid fa-check"></i> Tersimpan!';
+  setTimeout(() => b.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan', 2000);
+};
+document.getElementById('keyEye').onclick = () => {
+  const i = document.getElementById('keyInput'), ic = document.getElementById('keyEyeIc'), h = i.type === 'password';
+  i.type = h ? 'text' : 'password'; ic.className = h ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+};
+
+// ═══════════════════════════════════════════════════════
+//  TOPIC / DIFF CHIPS
+// ═══════════════════════════════════════════════════════
+document.querySelectorAll('#topicGroup .chip').forEach(c => {
+  c.onclick = () => { document.querySelectorAll('#topicGroup .chip').forEach(x => x.classList.remove('active')); c.classList.add('active'); topic = c.dataset.topic; };
+});
+document.querySelectorAll('#diffGroup .diff-chip').forEach(c => {
+  c.onclick = () => { document.querySelectorAll('#diffGroup .diff-chip').forEach(x => x.classList.remove('active')); c.classList.add('active'); diff = c.dataset.diff; };
+});
+
+// ═══════════════════════════════════════════════════════
+//  GENERATE SENTENCES via Gemini
+// ═══════════════════════════════════════════════════════
+document.getElementById('genBtn').onclick = generate;
+
+async function generate() {
+  if (!gemKey) { showErr('Masukkan dan simpan Gemini API Key.'); return; }
+  if (generating) return;
+  generating = true;
+
+  const pc = document.getElementById('practiceCard');
+  pc.innerHTML = `<div style="padding:6px 0">
+    <div class="skel" style="width:40%;height:13px"></div>
+    <div class="skel" style="width:88%;height:24px;margin-top:12px"></div>
+    <div class="skel" style="width:72%;height:24px"></div>
+    <div class="skel" style="width:55%;height:13px;margin-top:8px"></div>
+  </div>`;
+  hide('speechCard'); hide('actBtns'); hide('nextRow');
+  document.getElementById('feedbackBox').classList.remove('show');
+
+  const gb = document.getElementById('genBtn'); gb.disabled = true;
+  gb.innerHTML = '<div class="spin"></div> Generating...';
+
+  const dm = { easy:'A2-B1 CEFR', medium:'B1-B2 CEFR', hard:'C1-C2 CEFR' };
+  const prompt = `You are an English speaking coach. Generate exactly 8 unique English practice sentences for the topic "${topic}" at ${dm[diff]} level.\n\nRules:\n- Natural spoken English only.\n- Vary structures: questions, statements, conditionals, exclamations.\n- For "hard": include at least 2 idioms or phrasal verbs.\n- No numbering or prefixes.\n\nRespond ONLY with a valid JSON array — no markdown, no explanation:\n[{"text":"...","category":"${topic}","hint":"brief coaching tip","difficulty":"${diff}"},...]`;
+
+  try {
+    const MODELS = ['gemini-2.0-flash','gemini-2.0-flash-lite','gemini-1.5-flash'];
+    let resp, lastErr;
+    for (const m of MODELS) {
+      try {
+        resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${gemKey}`,
+          { method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ contents:[{parts:[{text:prompt}]}], generationConfig:{temperature:1.0,maxOutputTokens:2048} }) });
+        if (resp.ok) break;
+        const ed = await resp.json(); lastErr = ed.error?.message || 'HTTP '+resp.status;
+      } catch(e) { lastErr = e.message; }
+    }
+    if (!resp || !resp.ok) throw new Error(lastErr || 'Semua model gagal.');
+
+    const data = await resp.json();
+    let raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    raw = raw.replace(/```json\s*/gi,'').replace(/```\s*/g,'').trim();
+    let parsed;
+    try { parsed = JSON.parse(raw); }
+    catch(e) { const m = raw.match(/\[[\s\S]*\]/); if (m) parsed = JSON.parse(m[0]); else throw new Error('Format JSON tidak valid dari Gemini.'); }
+    if (!Array.isArray(parsed) || !parsed.length) throw new Error('Data kosong dari Gemini.');
+
+    sentences = parsed; idx = 0;
+    renderSentence(0);
+    show('speechCard'); show('actBtns'); show('nextRow');
+    updateProg();
+  } catch(e) {
+    showErr('Gagal generate: '+e.message);
+    pc.innerHTML = `<div class="empty-state"><i class="fa-solid fa-triangle-exclamation" style="color:#FCA5A5"></i><div class="et">Gagal memuat kalimat</div><div class="es">Cek API Key dan koneksi internet Anda.</div></div>`;
+  } finally {
+    generating = false; gb.disabled = false;
+    gb.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Generate dengan Gemini AI';
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDER SENTENCE
+// ═══════════════════════════════════════════════════════
+function renderSentence(i) {
+  const s = sentences[i];
+  const dc = {easy:'#166534',medium:'#92400E',hard:'#991B1B'};
+  const db = {easy:'var(--okl)',medium:'var(--warnl)',hard:'var(--errl)'};
+  document.getElementById('practiceCard').innerHTML = `
+    <div style="display:flex;align-items:center;gap:7px;margin-bottom:13px;flex-wrap:wrap">
+      <div class="cat-tag"><i class="fa-solid fa-graduation-cap"></i><span>${esc(s.category)}</span></div>
+      <div style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;background:${db[s.difficulty]};color:${dc[s.difficulty]};text-transform:uppercase;letter-spacing:.08em">${s.difficulty}</div>
+      <span class="ai-badge"><i class="fa-solid fa-wand-magic-sparkles" style="font-size:8px"></i>AI</span>
+    </div>
+    <div class="sentence">${esc(s.text)}</div>
+    <div class="hint-row"><i class="fa-regular fa-lightbulb" style="margin-top:2px;flex-shrink:0"></i><span>${esc(s.hint)}</span></div>`;
+
+  const tb = document.getElementById('transBox');
+  tb.textContent = 'Press "Start Speaking" and read the sentence aloud...';
+  tb.className = 'trans-box';
+  document.getElementById('feedbackBox').classList.remove('show','fb-p','fb-g','fb-k');
+  setStat('idle'); interim = '';
+  hide('micVis');
+}
+
+function updateProg() {
+  const f = document.getElementById('progFill'), l = document.getElementById('progLbl');
+  if (!sentences.length) { f.style.width='0%'; l.textContent='0 / 0'; return; }
+  f.style.width = ((idx+1)/sentences.length*100)+'%';
+  l.textContent = (idx+1)+' / '+sentences.length;
+}
+
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function show(id) { document.getElementById(id).style.display=''; }
+function hide(id) { document.getElementById(id).style.display='none'; }
+
+// ═══════════════════════════════════════════════════════
+//  SPEECH RECOGNITION
+// ═══════════════════════════════════════════════════════
+function initRec() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { showErr('Speech recognition tidak didukung. Gunakan Chrome atau Edge.'); document.getElementById('recBtn').disabled = true; return false; }
+  rec = new SR(); rec.lang='en-US'; rec.interimResults=true; rec.maxAlternatives=3; rec.continuous=false;
+
+  rec.onresult = e => {
+    let it='', ft='';
+    for (let i=e.resultIndex;i<e.results.length;i++) {
+      if (e.results[i].isFinal) ft+=e.results[i][0].transcript;
+      else it+=e.results[i][0].transcript;
+    }
+    const tb=document.getElementById('transBox');
+    if (ft) { interim=ft; tb.textContent=ft; tb.className='trans-box done'; }
+    else if (it) { tb.textContent=it+' ...'; tb.className='trans-box live'; }
+  };
+
+  rec.onerror = e => {
+    stopRec(false); setStat('idle'); hide('micVis');
+    if (e.error==='not-allowed') showErr('Akses mikrofon ditolak. Izinkan akses mikrofon di browser settings.');
+    else if (e.error==='no-speech') showErr('Tidak terdeteksi suara. Coba lagi dan bicara lebih jelas.');
+    else if (e.error !== 'aborted') showErr('Error: '+e.error);
+  };
+
+  rec.onend = () => {
+    if (recording) {
+      stopRec(false); hide('micVis');
+      setTimeout(() => {
+        const tb=document.getElementById('transBox');
+        const t=interim||tb.textContent.replace(' ...','').trim();
+        if (t && t!=='Press "Start Speaking" and read the sentence aloud...' && t!=='Listening...') process(t);
+        else setStat('idle');
+      }, 200);
+    }
+  };
+  return true;
+}
+
+function setStat(st) {
+  const b=document.getElementById('statusBadge'),d=document.getElementById('statusDot'),t=document.getElementById('statusTxt');
+  b.className='status-badge st-'+st;
+  d.className='dot'+(st==='listening'?' blink':'');
+  t.textContent={idle:'Idle',listening:'Listening...',processing:'Processing...',done:'Done ✓'}[st]||st;
+}
+
+function startRec() {
+  if (!rec && !initRec()) return;
+  if (!sentences.length) { showErr('Generate kalimat terlebih dahulu.'); return; }
+  hideErr(); interim='';
+  const tb=document.getElementById('transBox'); tb.textContent='Listening...'; tb.className='trans-box live';
+  document.getElementById('feedbackBox').classList.remove('show');
+  recording=true; setStat('listening');
+  show('micVis'); document.getElementById('micVis').classList.add('show');
+  document.getElementById('recBtn').classList.add('on');
+  document.getElementById('recIcon').className='fa-solid fa-stop';
+  document.getElementById('recTxt').textContent='Stop Recording';
+  try { rec.start(); } catch(e) { rec.abort(); setTimeout(()=>{ if(rec) rec.start(); },300); }
+}
+
+function stopRec(now=true) {
+  recording=false;
+  document.getElementById('recBtn').classList.remove('on');
+  document.getElementById('recIcon').className='fa-solid fa-microphone';
+  document.getElementById('recTxt').textContent='Start Speaking';
+  setStat('processing'); hide('micVis');
+  if (rec) { try{rec.stop();}catch(e){} }
+  if (now) {
+    setTimeout(() => {
+      const tb=document.getElementById('transBox');
+      const t=interim||tb.textContent.replace(' ...','').trim();
+      if (t && t!=='Listening...' && t!=='Press "Start Speaking" and read the sentence aloud...') process(t);
+      else { setStat('idle'); showErr('Tidak ada suara terdeteksi. Coba lagi.'); }
+    },500);
+  }
+}
+
+document.getElementById('recBtn').onclick   = () => recording ? stopRec(true) : startRec();
+document.getElementById('listenBtn').onclick = () => {
+  if (!sentences.length || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(sentences[idx].text);
+  u.lang='en-US'; u.rate=0.85; u.pitch=1; u.volume=1;
+  const vs=window.speechSynthesis.getVoices(); const ev=vs.find(v=>v.lang.startsWith('en')&&v.localService)||vs.find(v=>v.lang.startsWith('en')); if(ev) u.voice=ev;
+  const b=document.getElementById('listenBtn'); b.disabled=true;
+  u.onend=u.onerror=()=>b.disabled=false;
+  window.speechSynthesis.speak(u);
+};
+document.getElementById('nextBtn').onclick = () => {
+  if (!sentences.length) return;
+  idx=(idx+1)%sentences.length;
+  renderSentence(idx); updateProg();
+  if(rec){try{rec.abort();}catch(e){} rec=null;} initRec();
+};
+
+// ═══════════════════════════════════════════════════════
+//  SCORING & SIMILARITY
+// ═══════════════════════════════════════════════════════
+const CTR = {"i'm":"i am","i've":"i have","i'll":"i will","i'd":"i would","you're":"you are","you've":"you have","you'll":"you will","you'd":"you would","he's":"he is","she's":"she is","it's":"it is","we're":"we are","we've":"we have","we'll":"we will","we'd":"we would","they're":"they are","they've":"they have","they'll":"they will","they'd":"they would","that's":"that is","there's":"there is","can't":"cannot","won't":"will not","don't":"do not","doesn't":"does not","didn't":"did not","isn't":"is not","aren't":"are not","wasn't":"was not","weren't":"were not","hasn't":"has not","haven't":"have not","hadn't":"had not","wouldn't":"would not","couldn't":"could not","shouldn't":"should not","gonna":"going to","wanna":"want to","gotta":"got to","lemme":"let me","gimme":"give me"};
+function norm(t){ return t.toLowerCase().replace(/[.,!?;:'"()\-]/g,'').replace(/\s+/g,' ').trim().split(' ').map(w=>CTR[w]||w).join(' '); }
+function jaccard(a,b){ const sa=new Set(norm(a).split(' ')),sb=new Set(norm(b).split(' ')),i=new Set([...sa].filter(w=>sb.has(w))),u=new Set([...sa,...sb]); return u.size===0?1:i.size/u.size; }
+function overlap(a,b){ const wa=norm(a).split(' '),sb=new Set(norm(b).split(' ')),m=wa.filter(w=>sb.has(w)).length; return wa.length===0?1:m/wa.length; }
+
+function process(spoken) {
+  setStat('done');
+  const tb=document.getElementById('transBox'); tb.textContent=spoken; tb.className='trans-box done';
+  const target=sentences[idx].text, d=sentences[idx].difficulty||'easy';
+  const sim=Math.max(jaccard(target,spoken),overlap(target,spoken));
+  const nt=norm(target), ns=norm(spoken);
+  const TH={easy:{p:.95,g:.65},medium:{p:.88,g:.55},hard:{p:.80,g:.45}};
+  const t=TH[d]||TH.easy;
+  const tw=nt.split(' '),sws=new Set(ns.split(' ')),miss=tw.filter(w=>!sws.has(w)),tset=new Set(tw),extra=ns.split(' ').filter(w=>!tset.has(w));
+
+  let cls, title, body;
+  if (nt===ns || sim>=t.p) {
+    cls='fb-p'; title='🎉 Perfect!'; body='Amazing! You said it exactly right. Keep going!';
+    addPts(10,'+10 pts 🎉'); strk++; perf++;
+  } else if (sim>=t.g) {
+    cls='fb-g'; title='👍 Good — keep refining!'; body=`You matched <strong>${Math.round(sim*100)}%</strong> of the sentence.`;
+    if (miss.length) body+=`<br>Missing: ${miss.map(w=>`<span class="fw">${esc(w)}</span>`).join(', ')}`;
+    if (extra.length) body+=`<br>Extra words: ${extra.map(w=>`<span class="fw">${esc(w)}</span>`).join(', ')}`;
+    addPts(5,'+5 pts 👍'); strk=0;
+  } else {
+    cls='fb-k'; title='💪 Keep Practicing!'; body=`Matched ~<strong>${Math.round(sim*100)}%</strong>.`;
+    if (miss.length) body+=`<br>Focus on: ${miss.slice(0,5).map(w=>`<span class="fw">${esc(w)}</span>`).join(', ')}`;
+    body+='<br>Click <strong>Listen</strong> then try again!'; strk=0;
+  }
+
+  const fb=document.getElementById('feedbackBox'); fb.className=`feedback show ${cls}`;
+  document.getElementById('fbTitle').innerHTML=title; document.getElementById('fbBody').innerHTML=body;
+  document.getElementById('sPts').textContent=pts; document.getElementById('sPerf').textContent=perf; document.getElementById('sStrk').textContent=strk;
+}
+
+function addPts(p,msg){ pts+=p; const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
+function showErr(msg){ const e=document.getElementById('errBox'); document.getElementById('errMsg').textContent=msg; e.classList.add('show'); setTimeout(()=>e.classList.remove('show'),6000); }
+function hideErr(){ document.getElementById('errBox').classList.remove('show'); }
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+initSession();
+loadKey();
+initRec();
+</script>
+</body>
+</html>
