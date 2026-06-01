@@ -665,7 +665,7 @@ async function generate() {
   const prompt = `You are an English speaking coach. Generate exactly 8 unique English practice sentences for the topic "${topic}" at ${dm[diff]} level.\n\nRules:\n- Natural spoken English only.\n- Vary structures: questions, statements, conditionals, exclamations.\n- For "hard": include at least 2 idioms or phrasal verbs.\n- No numbering or prefixes.\n\nRespond ONLY with a valid JSON array — no markdown, no explanation:\n[{"text":"...","category":"${topic}","hint":"brief coaching tip","difficulty":"${diff}"},...]`;
 
   try {
-    const MODELS = ['gemini-2.0-flash','gemini-2.0-flash-lite','gemini-1.5-flash'];
+    const MODELS = ['gemini-3.1-flash-lite'];
     let resp, lastErr;
     for (const m of MODELS) {
       try {
