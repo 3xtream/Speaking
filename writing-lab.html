@@ -200,85 +200,105 @@
             border: 1px solid var(--border); border-radius: 12px;
             padding: 20px; background: #fff;
         }
-        .fb-block { margin-bottom: 20px; }
+        .fb-block { margin-bottom: 25px; }
         .fb-title { font-weight: bold; margin-bottom: 8px; font-size: 15px; }
+        .fb-trans   .fb-title { color: #475569; }
         .fb-good   .fb-title { color: #16a34a; }
-        .fb-clear  .fb-title { color: #ea580c; }
-        .fb-better .fb-title { color: #2563eb; }
-        .fb-skill  .fb-title { color: #7c3aed; }
-        .fb-score  .fb-title { color: #b45309; }
-        .fb-next   .fb-title { color: #7c3aed; }
+        .fb-pattern-box .fb-title { color: #ea580c; }
+        .fb-analysis .fb-title { color: #2563eb; }
+        .fb-matrix-box  .fb-title { color: #7c3aed; }
+        .fb-summary  .fb-title { color: #b45309; }
+        .fb-next   .fb-title { color: #1e1b4b; }
+        .fb-image-attachment .fb-title { color: #64748b; }
         .fb-text-box { margin: 0; color: #334155; font-size: 15px; line-height: 1.6; white-space: pre-line; }
-        
-        /* Table Side-by-Side Analysis */
+
+        /* Side-by-Side Analysis Table */
         .analysis-table {
             width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px;
         }
         .analysis-table th, .analysis-table td {
             border: 1px solid var(--border); padding: 10px; text-align: left; vertical-align: top;
         }
-        .analysis-table th { background-color: #f8fafc; color: #475569; font-weight: 600; }
-        .orig-text { color: #dc2626; font-style: italic; }
-        .recom-text { color: #16a34a; font-weight: 600; }
+        .analysis-table th { background-color: #f1f5f9; color: #334155; font-weight: 600; }
+        .orig-text { color: #b91c1c; font-weight: 500; }
+        .recom-text { color: #15803d; font-weight: 500; }
 
         /* Growth Matrix Layout */
         .matrix-container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 15px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 10px;
         }
         .matrix-item {
             background: #f8fafc; border: 1px solid var(--border); border-radius: 8px;
-            padding: 10px; display: flex; justify-content: space-between; align-items: center;
+            padding: 10px; text-align: center; display: flex; flex-direction: column;
+            justify-content: space-between; align-items: center; gap: 6px;
         }
-        .matrix-label { font-size: 13px; font-weight: 600; color: #475569; }
+        .matrix-label { font-size: 12px; font-weight: 600; color: #475569; }
         .matrix-badge {
             font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 100px; text-transform: uppercase;
         }
-        .badge-emerging   { background: #fee2e2; color: #991b1b; }
-        .badge-developing { background: #fef3c7; color: #92400e; }
-        .badge-proficient { background: #dbeafe; color: #1e40af; }
-        .badge-advanced   { background: #dcfce7; color: #166534; }
+        .badge-advanced   { background: #dcfce7; color: #15803d; }
+        .badge-proficient { background: #e0f2fe; color: #0369a1; }
+        .badge-developing { background: #fef3c7; color: #b45309; }
+        .badge-emerging   { background: #fee2e2; color: #b91c1c; }
 
-        /* Action Buttons */
+        /* Buttons */
         .action-buttons { display: flex; gap: 12px; margin-top: 20px; }
-        .btn-rewrite, .btn-print {
-            width: 100%; padding: 12px; font-weight: 600; border-radius: 8px; 
-            cursor: pointer; margin-top: 15px; font-size: 14px; font-family: 'Segoe UI', sans-serif;
+        .btn-rewrite, .btn-pdf {
+            width: 100%; padding: 12px; font-weight: 600; border-radius: 8px;
+            cursor: pointer; font-size: 14px; font-family: 'Segoe UI', sans-serif;
         }
-        .btn-rewrite {
-            background-color: transparent; color: var(--primary); border: 2px solid var(--primary);
-        }
+        .btn-rewrite { background-color: transparent; color: var(--primary); border: 2px solid var(--primary); }
         .btn-rewrite:hover { background-color: #eef2ff; }
-        .btn-print {
-            background-color: var(--primary); color: white; border: none;
-        }
-        .btn-print:hover { background-color: var(--primary-hover); }
+        .btn-pdf { background-color: #334155; color: white; border: none; }
+        .btn-pdf:hover { background-color: #1e293b; }
 
         /* ── PRINT STYLESHEET ── */
         @media print {
-            body { background: white; color: black; padding: 0; margin: 0; }
-            .container { max-width: 100%; box-shadow: none; padding: 0; border-radius: 0; }
-            
-            /* Sembunyikan elemen input, config, tombol, dan area kerja utama */
-            .api-config-box, 
-            .streak-container, 
-            .type-filter-section, 
-            #btn-generate, 
-            #challenge-area, 
-            #writing-area, 
+            .api-config-box,
+            .streak-container,
+            .type-filter-section,
+            .btn-generate,
+            #writing-area,
+            #loading-status,
             .action-buttons,
-            .loading-spinner,
-            header { 
-                display: none !important; 
+            header p.subtitle {
+                display: none !important;
             }
 
-            /* Paksa hasil evaluasi agar selalu tampil penuh saat print */
-            .feedback-section { display: block !important; margin-top: 0; }
-            .feedback-card { border: none; padding: 0; }
+            body {
+                background: white !important;
+                color: black !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .container {
+                max-width: 100% !important;
+                width: 100% !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            tr {
+                page-break-inside: avoid;
+            }
             
-            /* Optimasi tabel dan elemen berwarna saat diprint */
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            .analysis-table th { background-color: #f1f5f9 !important; }
-            .matrix-item { background: #f8fafc !important; border: 1px solid #cbd5e1 !important; }
+            .feedback-card {
+                border: none !important;
+                padding: 0 !important;
+            }
+
+            .fb-print-preview {
+                max-width: 100% !important;
+                height: auto !important;
+                page-break-inside: avoid;
+            }
         }
     </style>
 </head>
@@ -349,66 +369,74 @@
         <h2 style="font-size: 18px; margin-bottom: 15px; color: #334155;">💡 Hasil Evaluasi Tulisanmu:</h2>
         <div class="feedback-card">
 
-            <div class="fb-block" style="background: #f1f5f9; padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border);">
-                <div class="fb-title" style="color: #475569;">📝 Hasil Transkripsi Tulisan Tangan Anda:</div>
+            <div class="fb-block fb-trans" style="background: #f1f5f9; padding: 15px; border-radius: 12px; border: 1px solid var(--border);">
+                <div class="fb-title">📝 Hasil Transkripsi Tulisan Tangan Anda:</div>
                 <p id="fb-transcription" class="fb-text-box" style="font-style: italic; color: #1e293b; font-weight: 500;"></p>
             </div>
 
             <div class="fb-block fb-good">
-                <div class="fb-title">✨ [Good Points] — Kelebihan Ide &amp; Ekspresimu:</div>
+                <div class="fb-title">✨ Kelebihan Tulisan Anda (Strengths):</div>
                 <p id="fb-strengths" class="fb-text-box"></p>
             </div>
 
-            <div class="fb-block fb-clear">
-                <div class="fb-title">🔍 [Clarity Check] — Bagian yang Perlu Lebih Jelas & Pola Kesalahan:</div>
+            <div class="fb-block fb-pattern-box">
+                <div class="fb-title">🔍 Pola Kesalahan Dominan (Dominant Pattern):</div>
                 <p id="fb-pattern" class="fb-text-box"></p>
             </div>
 
-            <div class="fb-block fb-better">
-                <div class="fb-title">🚀 [Better Way to Say It] — Rekomendasi Gaya Per Kalimat:</div>
-                <table class="analysis-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 30%;">Original</th>
-                            <th style="width: 35%;">Recommended</th>
-                            <th style="width: 35%;">Reason</th>
-                        </tr>
-                    </thead>
-                    <tbody id="fb-comp-body"></tbody>
-                </table>
+            <div class="fb-block fb-analysis">
+                <div class="fb-title">🚀 Analisis Per Kalimat (Sentence Analysis):</div>
+                <div style="overflow-x: auto;">
+                    <table class="analysis-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 30%;">Original</th>
+                                <th style="width: 30%;">Recommended</th>
+                                <th style="width: 40%;">Reason / Grammar Rule</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fb-comp-body"></tbody>
+                    </table>
+                </div>
             </div>
 
-            <div class="fb-block fb-skill" style="border-top: 1px dashed #e2e8f0; padding-top: 15px;">
-                <div class="fb-title">🎯 [Writing Type Check] — Pencapaian Target Jenis Tulisan:</div>
-                <p id="fb-skill-summary" class="skill-summary"></p>
-                <div class="matrix-container" id="fb-matrix"></div>
+            <div class="fb-block fb-matrix-box" style="border-top: 1px dashed #e2e8f0; padding-top: 15px;">
+                <div class="fb-title">📊 Matriks Pertumbuhan (Growth Matrix):</div>
+                <div id="fb-matrix" class="matrix-container"></div>
+                <div id="fb-matrix-explanation" style="margin-top: 15px;"></div>
             </div>
 
-            <div class="fb-block fb-score" style="border-top: 1px dashed #e2e8f0; padding-top: 15px;">
-                <div class="fb-title">📊 [Growth Matrix Explanation] — Penjelasan Matriks Kompetensi:</div>
-                <div id="fb-matrix-explanation"></div>
+            <div class="fb-block fb-summary" style="border-top: 1px dashed #e2e8f0; padding-top: 15px;">
+                <div class="fb-title">🎯 Pencapaian Target Jenis Tulisan (Task Summary):</div>
+                <p id="fb-skill-summary" class="fb-text-box"></p>
             </div>
 
-            <div class="fb-block fb-next" style="border-top: 1px dashed #e2e8f0; padding-top: 15px; margin-bottom: 0;">
-                <div class="fb-title">🌱 [Next Challenge] — Langkah Koreksi Mandiri:</div>
-                <p id="fb-next-text" class="fb-text-box" style="font-weight: 500; color: #1e1b4b;"></p>
-                <p id="fb-next" style="display:none;"></p>
+            <div class="fb-block fb-next" style="border-top: 1px dashed #e2e8f0; padding-top: 15px;">
+                <div class="fb-title">🌱 Langkah Koreksi Mandiri (Next Challenge):</div>
+                <p id="fb-next" class="fb-text-box" style="font-weight: 500; color: #1e1b4b;"></p>
             </div>
+
+            <!-- Lampiran Foto untuk PDF/Print -->
+            <div id="fb-image-attachment" class="fb-block fb-image-attachment" style="display: none; border-top: 1px dashed #e2e8f0; padding-top: 15px; margin-bottom: 0;">
+                <div class="fb-title">📷 Lampiran Foto Tulisan Tangan:</div>
+                <img id="fb-print-preview" class="fb-print-preview" src="" alt="Handwritten Attachment" style="max-width: 100%; max-height: 350px; border-radius: 8px; border: 1px solid var(--border); margin-top: 10px; display: block;">
+            </div>
+
         </div>
-
         <div class="action-buttons">
             <button class="btn-rewrite" onclick="prepareRewrite()">✏️ Revise & Edit My Text</button>
-            <button class="btn-print" onclick="window.print()">📄 Save Evaluation as PDF</button>
+            <button class="btn-pdf" onclick="downloadPDF()">📄 Save Evaluation as PDF</button>
         </div>
     </div>
 
 </div>
 
 <script>
+    // ── State ──
     let selectedType = 'random';
     let currentTopic = null;
     let base64Image = null;
-    let lastNextChallenge = null;
+    let lastNextChallenge = '';
     let typesUsed = new Set(JSON.parse(localStorage.getItem('types_used') || '[]'));
 
     const TYPE_LABELS = {
@@ -422,6 +450,7 @@
         compare_contrast:'🔀', procedural:'📋'
     };
 
+    // ── Init ──
     document.addEventListener('DOMContentLoaded', () => {
         const savedKey = localStorage.getItem('gemini_api_key');
         if (savedKey) {
@@ -440,10 +469,14 @@
         if (savedTopic && savedText !== null) {
             currentTopic = JSON.parse(savedTopic);
             renderChallenge(currentTopic);
+            
             const textInput = document.getElementById('user-input');
             textInput.value = savedText;
             document.getElementById('writing-area').style.display = 'block';
-            updateCounts(savedText);
+            
+            const trimmed = savedText.trim();
+            document.getElementById('sentence-count').textContent = trimmed === '' ? 0 : trimmed.split(/[.!?]+/).filter(s => s.trim().length > 1).length;
+            document.getElementById('word-count').textContent     = trimmed === '' ? 0 : trimmed.split(/\s+/).filter(w => w.length > 0).length;
         }
     });
 
@@ -473,6 +506,7 @@
     function handleImageUpload(input) {
         const file = input.files[0];
         if (!file) return;
+
         const reader = new FileReader();
         reader.onload = function (e) {
             const preview = document.getElementById('image-preview');
@@ -483,85 +517,137 @@
         reader.readAsDataURL(file);
     }
 
-    function updateCounts(text) {
-        const trimmed = text.trim();
-        document.getElementById('sentence-count').textContent = trimmed === '' ? 0 : trimmed.split(/[.!?]+/).filter(s => s.trim().length > 1).length;
-        document.getElementById('word-count').textContent     = trimmed === '' ? 0 : trimmed.split(/\s+/).filter(w => w.length > 0).length;
-    }
-
-    document.addEventListener('input', e => {
-        if (e.target.id !== 'user-input') return;
-        updateCounts(e.target.value);
-        if (currentTopic) {
-            localStorage.setItem('saved_writing_text', e.target.value);
-            localStorage.setItem('saved_writing_topic', JSON.stringify(currentTopic));
-        }
-    });
-
+    // ── Generate Topic ──
     async function generateTopic() {
         const apiKey = localStorage.getItem('gemini_api_key');
         if (!apiKey) { alert('Please enter and save your Gemini API Key first.'); return; }
 
         const btn = document.getElementById('btn-generate');
-        btn.disabled = true; btn.textContent = '⏳ Generating topic...';
+        btn.disabled = true;
+        btn.textContent = '⏳ Generating topic...';
 
         document.getElementById('writing-area').style.display  = 'none';
         document.getElementById('feedback-area').style.display = 'none';
+        document.getElementById('fb-image-attachment').style.display = 'none';
+        document.getElementById('fb-print-preview').src = '';
         document.getElementById('user-input').value = '';
         document.getElementById('image-input').value = '';
         document.getElementById('image-preview').style.display = 'none';
         base64Image = null;
-        updateCounts('');
+        document.getElementById('sentence-count').textContent = 0;
+        document.getElementById('word-count').textContent = 0;
 
         localStorage.removeItem('saved_writing_text');
         localStorage.removeItem('saved_writing_topic');
 
-        document.getElementById('challenge-area').innerHTML = `<div class="challenge-box"><div class="skeleton" style="height:18px;width:110px;margin-bottom:12px;"></div><div class="skeleton" style="height:20px;width:75%;margin-bottom:10px;"></div></div>`;
+        renderSkeleton();
 
-        const typeInstruction = selectedType === 'random' ? 'Choose randomly from: narrative, descriptive, expository, persuasive, argumentative, reflective, compare_contrast, procedural' : `Writing type MUST be: ${selectedType}`;
-        const prompt = `You are a writing exercise designer for Indonesian middle/high school students learning English. Create ONE fresh, engaging English writing challenge that feels relevant to students' daily life. ${typeInstruction}\n\nOutput ONLY a raw JSON object (no markdown backticks), with EXACTLY this structure:\n{\n  "writing_type": "narrative|descriptive|expository|persuasive|argumentative|reflective|compare_contrast|procedural",\n  "topic_title": "Short topic title in English (max 8 words)",\n  "topic_description": "Full instruction in English for the student (2-3 sentences, mention target of 3-5 sentences)",\n  "writing_target": "Short description in English: the key characteristics of this writing type and what the student should achieve",\n  "scaffold": [\n    "Specific guide for sentence 1",\n    "Specific guide for sentence 2",\n    "Specific guide for sentence 3",\n    "Specific guide for sentence 4"\n  ]\n}`;
+        const typeInstruction = selectedType === 'random'
+            ? 'Choose randomly from: narrative, descriptive, expository, persuasive, argumentative, reflective, compare_contrast, procedural'
+            : `Writing type MUST be: ${selectedType}`;
+
+        const prompt = `You are a writing exercise designer for Indonesian middle/high school students learning English.
+
+Create ONE fresh, engaging English writing challenge that feels relevant to students' daily life.
+${typeInstruction}
+
+Output ONLY a raw JSON object (no markdown backticks), with EXACTLY this structure:
+{
+  "writing_type": "narrative|descriptive|expository|persuasive|argumentative|reflective|compare_contrast|procedural",
+  "topic_title": "Short topic title in English (max 8 words)",
+  "topic_description": "Full instruction in English for the student (2-3 sentences, mention target of 3-5 sentences)",
+  "writing_target": "Short description in English: the key characteristics of this writing type and what the student should achieve",
+  "scaffold": [
+    "Specific guide for sentence 1",
+    "Specific guide for sentence 2",
+    "Specific guide for sentence 3",
+    "Specific guide for sentence 4 (optional, for expansion)"
+  ]
+}`;
 
         try {
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
             const res = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { responseMimeType: 'application/json' } })
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: { responseMimeType: 'application/json' }
+                })
             });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
             const data = await res.json();
-            let raw = data.candidates[0].content.parts[0].text.trim().replace(/^```json/, '').replace(/```$/, '').trim();
+            let raw = data.candidates[0].content.parts[0].text.trim()
+                         .replace(/^```json/, '').replace(/```$/, '').trim();
             currentTopic = JSON.parse(raw);
             renderChallenge(currentTopic);
             document.getElementById('writing-area').style.display = 'block';
+
             localStorage.setItem('saved_writing_topic', JSON.stringify(currentTopic));
             localStorage.setItem('saved_writing_text', '');
         } catch (err) {
-            document.getElementById('challenge-area').innerHTML = `<div class="placeholder-state"><span class="big-icon">⚠️</span><p>Failed to generate topic.</p></div>`;
+            console.error(err);
+            document.getElementById('challenge-area').innerHTML = `
+                <div class="placeholder-state">
+                    <span class="big-icon">⚠️</span>
+                    <p>Failed to generate topic. Please check your API Key and internet connection, then try again.</p>
+                </div>`;
         } finally {
-            btn.disabled = false; btn.textContent = '✨ Generate New Topic & Scaffold';
+            btn.disabled = false;
+            btn.textContent = '✨ Generate New Topic & Scaffold';
         }
     }
 
+    function renderSkeleton() {
+        document.getElementById('challenge-area').innerHTML = `
+            <div class="challenge-box" style="margin-bottom:20px;">
+                <div class="skeleton" style="height:18px;width:110px;margin-bottom:12px;"></div>
+                <div class="skeleton" style="height:20px;width:75%;margin-bottom:10px;"></div>
+                <div class="skeleton" style="height:14px;width:100%;margin-bottom:6px;"></div>
+                <div class="skeleton" style="height:14px;width:80%;"></div>
+            </div>`;
+    }
+
     function renderChallenge(topic) {
-        const wt = topic.writing_type || 'default';
-        const label = TYPE_LABELS[wt] || wt;
+        const wt       = topic.writing_type || 'default';
+        const badgeCls = 'badge-' + wt;
+        const icon     = TYPE_ICONS[wt]  || '📝';
+        const label    = TYPE_LABELS[wt] || wt;
         const scaffoldHTML = (topic.scaffold || []).map(s => `<li>${s}</li>`).join('');
+
         document.getElementById('challenge-area').innerHTML = `
             <div class="challenge-box">
-                <div class="writing-type-badge badge-${wt}">${TYPE_ICONS[wt]||'📝'} ${label} Writing</div>
+                <div class="writing-type-badge ${badgeCls}">${icon} ${label} Writing</div>
                 <h3>🎯 Today's Challenge: ${topic.topic_title}</h3>
                 <p id="challenge-desc">${topic.topic_description}</p>
             </div>
-            <div class="target-box"><h4>🎯 Writing Target — ${label}</h4><p>${topic.writing_target}</p></div>
-            <div class="scaffold-box"><h4>💡 Writing Scaffold Guide:</h4><ol>${scaffoldHTML}</ol></div>`;
+            <div class="target-box">
+                <h4>🎯 Writing Target — ${label}</h4>
+                <p>${topic.writing_target}</p>
+            </div>
+            <div class="scaffold-box">
+                <h4>💡 Writing Scaffold Guide:</h4>
+                <ol>${scaffoldHTML}</ol>
+            </div>`;
     }
 
-    function prepareRewrite() {
-        document.getElementById('user-input').focus();
-        alert('Kotak teks aktif. Silakan edit tulisan Anda berdasarkan rekomendasi.');
-    }
+    // ── Word / Sentence Count ──
+    document.addEventListener('input', e => {
+        if (e.target.id !== 'user-input') return;
+        const text = e.target.value;
+        const trimmedText = text.trim();
+        const sentences = trimmedText === '' ? 0 : trimmedText.split(/[.!?]+/).filter(s => s.trim().length > 1).length;
+        const words     = trimmedText === '' ? 0 : trimmedText.split(/\s+/).filter(w => w.length > 0).length;
+        document.getElementById('sentence-count').textContent = sentences;
+        document.getElementById('word-count').textContent     = words;
 
-    // ── Fungsi submitWriting Bawaan Anda Berhasil Terintegrasi Total ──
+        if (currentTopic) {
+            localStorage.setItem('saved_writing_text', text);
+            localStorage.setItem('saved_writing_topic', JSON.stringify(currentTopic));
+        }
+    });
+
+    // ── Submit Logic ──
     async function submitWriting() {
         const apiKey = localStorage.getItem('gemini_api_key');
         const userInput = document.getElementById('user-input').value.trim();
@@ -571,7 +657,20 @@
         const loader = document.getElementById('loading-status');
         btn.disabled = true; loader.style.display = 'block';
 
+        let topicContext = "NO SPECIFIC TOPIC GENERATED (Evaluate as general text)";
+        if (currentTopic) {
+            topicContext = `
+TARGET TASK CONTEXT ASSIGNED TO STUDENT:
+- Writing Type: ${currentTopic.writing_type}
+- Topic Title: ${currentTopic.topic_title}
+- Topic Description: ${currentTopic.topic_description}
+- Writing Target: ${currentTopic.writing_target}
+- Scaffold Guidelines: ${JSON.stringify(currentTopic.scaffold)}
+`;
+        }
+
         const systemPrompt = `You are an expert English writing mentor for Indonesian students. Your role is to provide DETAILED, CONSTRUCTIVE, and ENCOURAGING feedback that helps students genuinely improve.
+You MUST evaluate the student's text strictly in relation to the TARGET TASK CONTEXT provided below. Verify if they successfully adhered to the topic, requested genre rules, and the scaffold layout.
 
 ANALYSIS FRAMEWORK:
 1. Read the entire student text carefully before evaluating.
@@ -612,11 +711,16 @@ Output ONLY this JSON structure (no markdown, no extra text):
     "task_achievement": "Penjelasan 2-3 kalimat mengapa diberi level ini dan apa yang perlu dilakukan untuk naik ke level berikutnya",
     "vocabulary": "Penjelasan 2-3 kalimat mengapa diberi level ini dan apa yang perlu dilakukan untuk naik ke level berikutnya"
   },
-  "task_summary": "Evaluasi 3-4 kalimat: apakah tulisan mencapai tujuan genre? Apa yang membuat tulisan ini berhasil atau kurang berhasil secara keseluruhan? Sampaikan dengan jujur tapi penuh semangat.",
-  "next_challenge": "Berikan 3 instruksi SPESIFIK dan BERTAHAP untuk revisi draf kedua. Format: '1. [Aksi spesifik] — contoh: Ubah semua kata kerja di paragraf 2 dari simple present ke simple past. 2. [Aksi spesifik]. 3. [Aksi spesifik]'. Pastikan instruksi ini langsung bisa dilakukan siswa tanpa bingung."
+  "task_summary": "Evaluasi ketat 2-3 kalimat dalam Bahasa Indonesia apakah tulisan siswa sudah sesuai dengan struktur makro dan ciri kebahasaan dari jenis teks (Writing Type) yang ditargetkan di konteks tugas. Nyatakan apakah mereka berhasil memenuhi karakteristik utama genre tersebut atau tidak.",
+  "next_challenge": "Berikan 3 instruksi SPESIFIK dan BERTAHAP untuk revisi draf kedua. Format: '1. [Aksi spesifik] — contoh: Ubah semua kata kerja di paragraf 2 dari simple present ke simple past. 2. [Aksi spesifik]. 3. [Aksi spesifik]'. Pastikan instruksi ini langsung bisa dilakukan siswa tanpa bingung dan setiap aksinya sajikan di line baru tidak memanjang."
 }`;
 
-        const parts = [{ text: `${systemPrompt}\n\nStudent text:\n"${userInput}"` }];
+        const parts = [{ text: `${systemPrompt}
+
+${topicContext}
+
+Student text:
+"${userInput}"` }];
         if (base64Image) {
             parts.push({ inline_data: { mime_type: document.getElementById('image-input').files[0].type, data: base64Image } });
         }
@@ -638,8 +742,17 @@ Output ONLY this JSON structure (no markdown, no extra text):
             document.getElementById('fb-pattern').textContent = result.dominant_pattern;
             lastNextChallenge = result.next_challenge;
             document.getElementById('fb-next').textContent = result.next_challenge;
-            document.getElementById('fb-next-text').textContent = result.next_challenge;
             document.getElementById('fb-skill-summary').textContent = result.task_summary;
+
+            // Handle lampiran foto untuk PDF/print stylesheet
+            const printPreview = document.getElementById('fb-print-preview');
+            const imageAttachmentBlock = document.getElementById('fb-image-attachment');
+            if (base64Image) {
+                printPreview.src = document.getElementById('image-preview').src;
+                imageAttachmentBlock.style.display = 'block';
+            } else {
+                imageAttachmentBlock.style.display = 'none';
+            }
 
             // Table Body side-by-side
             const tbody = document.getElementById('fb-comp-body');
@@ -690,13 +803,26 @@ Output ONLY this JSON structure (no markdown, no extra text):
 
             document.getElementById('feedback-area').style.display = 'block';
             document.getElementById('feedback-area').scrollIntoView({ behavior: 'smooth' });
-            
-            let total = parseInt(localStorage.getItem('writing_total_count') || '0') + 1;
-            localStorage.setItem('writing_total_count', total);
-            document.getElementById('total-count').textContent = total;
         } catch (e) { alert('Analysis error.'); }
         finally { btn.disabled = false; loader.style.display = 'none'; }
     }
+
+    function downloadPDF() {
+        window.print();
+    }
+
+    function prepareRewrite() {
+        document.getElementById('user-input').focus();
+        alert('The text box is now active. Please revise your writing based on the recommendations given.');
+    }
+
+    window.addEventListener('beforeunload', (e) => {
+        const userInput = document.getElementById('user-input').value.trim();
+        if (userInput.length > 0 || base64Image) {
+            e.preventDefault();
+            e.returnValue = 'Draf otomatis disimpan di browser Anda. Apakah Anda yakin ingin keluar?';
+        }
+    });
 </script>
 </body>
 </html>
