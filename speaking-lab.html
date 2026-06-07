@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>S.P.R.I.N.T. — Speaking Training Framework</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #fafafa;
-    --surface: #ffffff;
-    --surface2: #f4f4f5;
-    --border: #e4e4e7;
-    --accent: #6c63ff;
-    --accent-muted: #71717a;
-    --text: #18181b;
-    --text-muted: #a1a1aa;
-    
-    /* Subtle indicators for phases */
+    --surface: #dbdbdb;
+    --surface2: #eeeeee;
+    --border: #bdbcbc;
+    --accent: #f5a623;
+    --accent2: #e8507a;
+    --accent3: #4fc3f7;
+    --accent4: #66bb6a;
+    --text: #000000;
+    --text-muted: #1c1c1c;
     --s-color: #f5a623;
     --p-color: #e8507a;
     --r-color: #4fc3f7;
@@ -33,221 +33,262 @@
     font-family: 'DM Sans', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== NOISE TEXTURE ===== */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
   }
 
   /* ===== HEADER ===== */
   header {
-    padding: 20px 40px;
+    padding: 24px 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
-    background: rgba(250, 250, 250, 0.8);
-    backdrop-filter: blur(8px);
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(12px);
     z-index: 100;
   }
 
   .logo {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
+    align-items: baseline;
+    gap: 10px;
   }
 
   .logo-text {
-    font-weight: 700;
-    font-size: 20px;
-    letter-spacing: -0.5px;
-    color: var(--accent);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 6px;
+    background: linear-gradient(90deg, var(--s-color), var(--p-color), var(--r-color), var(--i-color), var(--n-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .logo-sub {
     font-size: 11px;
-    color: var(--accent-muted);
-    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 300;
   }
 
   .api-key-area {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
 
   .api-key-area input {
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text);
-    padding: 8px 12px;
-    border-radius: 6px;
+    padding: 8px 14px;
+    border-radius: 8px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
-    width: 240px;
-    transition: all 0.2s ease;
+    width: 260px;
+    transition: border-color 0.2s;
   }
   .api-key-area input:focus { outline: none; border-color: var(--accent); }
 
   .btn-save-key {
     background: var(--accent);
-    color: #fff;
+    color: #000;
     border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 700;
     font-size: 12px;
-    transition: background 0.2s;
+    transition: opacity 0.2s;
   }
-  .btn-save-key:hover { background: #3f3f46; }
+  .btn-save-key:hover { opacity: 0.85; }
 
   /* ===== HERO ===== */
   .hero {
-    padding: 80px 40px 40px;
-    max-width: 960px;
+    padding: 60px 32px 40px;
+    max-width: 1100px;
     margin: 0 auto;
-    text-align: center;
   }
 
   .hero-tag {
     display: inline-block;
-    color: var(--accent-muted);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 1px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 16px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 20px;
   }
 
   .hero h1 {
-    font-weight: 700;
-    font-size: 48px;
-    line-height: 1.1;
-    letter-spacing: -1px;
-    margin-bottom: 16px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
   }
 
+  .hero h1 span { color: var(--accent); }
+
   .hero p {
-    max-width: 600px;
-    color: var(--accent-muted);
-    font-size: 15px;
-    line-height: 1.6;
-    margin: 0 auto;
+    max-width: 580px;
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 40px;
   }
 
   /* ===== PHASE PILLS ===== */
   .phase-nav {
     display: flex;
-    gap: 6px;
+    gap: 8px;
     flex-wrap: wrap;
-    justify-content: center;
-    padding: 0 40px 40px;
-    max-width: 960px;
-    margin: 0 auto;
+    margin-bottom: 0;
+    padding: 0 32px 32px;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .phase-pill {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
-    border-radius: 6px;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 100px;
     border: 1px solid var(--border);
     background: var(--surface);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.25s;
     font-size: 13px;
     font-weight: 500;
-    color: var(--accent-muted);
+    color: var(--text-muted);
   }
 
-  .phase-pill:hover { border-color: #a1a1aa; color: var(--text); }
+  .phase-pill:hover { border-color: var(--text-muted); color: var(--text); }
 
   .phase-pill.active {
-    color: #fff;
-    font-weight: 500;
-    background: var(--accent) !important;
-    border-color: var(--accent);
+    color: #000;
+    font-weight: 700;
+    border-color: transparent;
   }
 
+  .phase-pill[data-phase="S"].active { background: var(--s-color); }
+  .phase-pill[data-phase="P"].active { background: var(--p-color); }
+  .phase-pill[data-phase="R"].active { background: var(--r-color); }
+  .phase-pill[data-phase="I"].active { background: var(--i-color); }
+  .phase-pill[data-phase="N"].active { background: var(--n-color); }
+
   .phase-letter {
-    font-weight: 700;
-    opacity: 0.8;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
   }
 
   /* ===== MAIN CONTENT ===== */
   .main {
-    max-width: 960px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 40px 80px;
+    padding: 0 32px 80px;
   }
 
   .phase-panel {
     display: none;
-    animation: fadeIn 0.2s ease-out;
+    animation: fadeIn 0.35s ease;
   }
   .phase-panel.active { display: block; }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(4px); }
+    from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   /* ===== PHASE HEADER ===== */
   .phase-header {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 40px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-bottom: 32px;
+    padding: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+  }
+
+  .phase-badge {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    line-height: 1;
+    width: 90px;
+    text-align: center;
   }
 
   .phase-info h2 {
-    font-weight: 700;
-    font-size: 24px;
-    letter-spacing: -0.5px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 2px;
     margin-bottom: 4px;
   }
 
   .phase-info .phase-subtitle {
-    font-size: 12px;
-    color: var(--accent-muted);
+    font-size: 13px;
+    color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 600;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
   }
 
   .phase-info p {
-    color: var(--accent-muted);
-    font-size: 14px;
-    line-height: 1.6;
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.65;
+    font-weight: 300;
+    max-width: 640px;
   }
 
   .phase-duration {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 5px 12px;
     font-size: 12px;
-    color: var(--accent-muted);
-    margin-top: 8px;
-    font-weight: 500;
+    color: var(--text-muted);
+    margin-top: 14px;
   }
 
   /* ===== CARDS ===== */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 24px;
-    margin-bottom: 24px;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
   }
 
   .card-title {
-    font-size: 12px;
+    font-size: 13px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--accent-muted);
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
     margin-bottom: 16px;
     font-weight: 600;
   }
@@ -256,44 +297,41 @@
   .btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 10px 18px;
-    border-radius: 6px;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 10px;
     border: none;
     cursor: pointer;
     font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    transition: all 0.15s ease;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.2s;
   }
-  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
-  .btn-primary { background: var(--accent); color: #fff; }
-  .btn-primary:hover:not(:disabled) { background: #3f3f46; }
+  .btn-primary { background: var(--accent); color: #000; }
+  .btn-primary:hover:not(:disabled) { opacity: 0.85; transform: translateY(-1px); }
 
   .btn-ghost {
-    background: transparent;
+    background: var(--surface2);
     border: 1px solid var(--border);
     color: var(--text);
   }
-  .btn-ghost:hover:not(:disabled) { background: var(--surface2); border-color: #a1a1aa; }
+  .btn-ghost:hover:not(:disabled) { border-color: var(--text-muted); }
 
-  .btn-danger { background: #ef4444; color: #fff; }
-  .btn-danger:hover:not(:disabled) { background: #dc2626; }
-  
-  .btn-success { background: #22c55e; color: #fff; }
-  .btn-success:hover:not(:disabled) { background: #16a34a; }
+  .btn-danger { background: var(--accent2); color: #fff; }
+  .btn-success { background: var(--accent4); color: #000; }
 
   /* ===== AI OUTPUT ===== */
   .ai-output {
     background: var(--surface2);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 16px;
-    font-size: 14px;
-    line-height: 1.6;
+    border-radius: 12px;
+    padding: 20px;
+    font-size: 15px;
+    line-height: 1.75;
     color: var(--text);
-    min-height: 60px;
+    min-height: 80px;
     white-space: pre-wrap;
     position: relative;
   }
@@ -301,8 +339,8 @@
   .ai-output.loading::after {
     content: '';
     display: inline-block;
-    width: 2px;
-    height: 14px;
+    width: 6px;
+    height: 18px;
     background: var(--accent);
     margin-left: 4px;
     animation: blink 0.8s infinite;
@@ -314,391 +352,459 @@
   .ai-label {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--accent-muted);
-    margin-bottom: 8px;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
     font-weight: 600;
   }
 
   .ai-dot {
-    width: 6px;
-    height: 6px;
-    background: #a78bfa;
+    width: 7px;
+    height: 7px;
+    background: var(--accent3);
     border-radius: 50%;
+    animation: pulse 2s infinite;
   }
+
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
   /* ===== PHASE S: SHADOWING ===== */
   .script-box {
     background: var(--surface2);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 20px;
-    font-size: 15px;
-    line-height: 1.8;
+    border-radius: 12px;
+    padding: 24px;
+    font-size: 17px;
+    line-height: 2;
     color: var(--text);
-    min-height: 120px;
+    min-height: 160px;
   }
 
   .script-box .word {
     display: inline;
     cursor: pointer;
-    border-radius: 3px;
-    padding: 1px 2px;
-    transition: background 0.15s;
+    border-radius: 4px;
+    padding: 2px 3px;
+    transition: background 0.2s;
   }
 
-  .script-box .word.highlighted { background: rgba(245, 166, 35, 0.15); color: #d97706; font-weight: 500; }
+  .script-box .word.highlighted { background: rgba(245, 166, 35, 0.3); color: var(--accent); }
   .script-box .word.done { color: var(--text-muted); }
 
-  .topic-input, select {
+  .topic-input {
     width: 100%;
-    background: var(--surface);
+    background: var(--surface2);
     border: 1px solid var(--border);
     color: var(--text);
-    padding: 10px 14px;
-    border-radius: 6px;
+    padding: 14px 18px;
+    border-radius: 12px;
     font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    transition: border-color 0.15s;
+    font-size: 15px;
+    resize: vertical;
+    min-height: 80px;
+    transition: border-color 0.2s;
   }
-  .topic-input:focus, select:focus { outline: none; border-color: var(--accent); }
-  
-  textarea.topic-input { resize: vertical; min-height: 80px; }
-  input[type="text"].topic-input { height: 40px; }
+  .topic-input:focus { outline: none; border-color: var(--accent); }
+
+  input[type="text"].topic-input {
+    min-height: unset;
+    height: 48px;
+    resize: none;
+  }
 
   /* ===== PHRASAL BANK ===== */
   .phrasals-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 14px;
     margin-bottom: 20px;
   }
 
   .phrasal-card {
-    background: var(--surface);
+    background: var(--surface2);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 16px;
+    border-radius: 12px;
+    padding: 18px;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.2s;
     position: relative;
   }
-  .phrasal-card:hover { border-color: var(--accent); }
+  .phrasal-card:hover { border-color: var(--p-color); transform: translateY(-2px); }
 
   .phrasal-category {
     font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--accent-muted);
-    margin-bottom: 6px;
+    letter-spacing: 1.5px;
+    color: var(--p-color);
+    margin-bottom: 8px;
     font-weight: 600;
   }
 
-  .phrasal-text { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
-  .phrasal-usage { font-size: 12px; color: var(--accent-muted); font-style: italic; }
+  .phrasal-text {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .phrasal-usage {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
 
   .phrasal-card .btn-speak-phrase {
     position: absolute;
-    top: 12px;
-    right: 12px;
-    background: var(--surface2);
+    top: 14px;
+    right: 14px;
+    background: var(--surface);
     border: 1px solid var(--border);
-    color: var(--accent-muted);
-    padding: 3px 6px;
-    border-radius: 4px;
+    color: var(--text-muted);
+    padding: 5px 10px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 16px;
+    transition: all 0.2s;
   }
-  .phrasal-card .btn-speak-phrase:hover { color: var(--text); border-color: var(--accent); }
+  .phrasal-card .btn-speak-phrase:hover { color: var(--p-color); border-color: var(--p-color); }
 
   /* ===== TIMER ===== */
   .timer-display {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 64px;
-    font-weight: 400;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 96px;
     color: var(--accent);
     text-align: center;
     line-height: 1;
-    margin: 24px 0;
+    letter-spacing: 4px;
+    margin: 20px 0;
+    transition: color 0.3s;
   }
-  .timer-display.urgent { color: #ef4444; font-weight: 500; }
-  .timer-controls { display: flex; gap: 8px; justify-content: center; margin-bottom: 24px; }
+  .timer-display.urgent { color: var(--accent2); }
+
+  .timer-controls { display: flex; gap: 12px; justify-content: center; margin-bottom: 20px; }
 
   /* ===== CHAT ===== */
   .chat-box {
     background: var(--surface2);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    height: 360px;
+    border-radius: 16px;
+    height: 400px;
     overflow-y: auto;
-    padding: 16px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     margin-bottom: 16px;
   }
 
+  .chat-box::-webkit-scrollbar { width: 6px; }
+  .chat-box::-webkit-scrollbar-track { background: transparent; }
+  .chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
   .chat-msg {
-    max-width: 85%;
-    padding: 10px 14px;
-    border-radius: 6px;
-    font-size: 14px;
-    line-height: 1.5;
+    max-width: 80%;
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-size: 15px;
+    line-height: 1.6;
+    animation: msgIn 0.3s ease;
+  }
+
+  @keyframes msgIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .chat-msg.user {
-    background: var(--accent);
+    background: var(--i-color);
     color: #fff;
     align-self: flex-end;
+    border-bottom-right-radius: 4px;
   }
 
   .chat-msg.ai {
     background: var(--surface);
     border: 1px solid var(--border);
     align-self: flex-start;
+    border-bottom-left-radius: 4px;
   }
 
   .chat-msg.correction {
-    background: #fef2f2;
-    border: 1px solid #fca5a5;
+    background: rgba(232, 80, 122, 0.12);
+    border: 1px solid rgba(232, 80, 122, 0.3);
     align-self: flex-start;
-    font-size: 12px;
-    color: #b91c1c;
+    font-size: 13px;
+    color: var(--p-color);
+    border-bottom-left-radius: 4px;
   }
 
-  .chat-input-area { display: flex; gap: 8px; align-items: flex-end; }
+  .chat-input-area {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
   .chat-input-area textarea {
     flex: 1;
-    background: var(--surface);
+    background: var(--surface2);
     border: 1px solid var(--border);
     color: var(--text);
-    padding: 10px 14px;
-    border-radius: 6px;
+    padding: 14px 18px;
+    border-radius: 12px;
     font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     resize: none;
-    min-height: 40px;
-    max-height: 100px;
-    transition: border-color 0.15s;
+    min-height: 52px;
+    max-height: 120px;
+    transition: border-color 0.2s;
   }
-  .chat-input-area textarea:focus { outline: none; border-color: var(--accent); }
+  .chat-input-area textarea:focus { outline: none; border-color: var(--i-color); }
 
   /* ===== SCENARIO SELECTOR ===== */
   .scenario-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 10px;
-    margin-bottom: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
   }
 
   .scenario-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 16px;
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.2s;
+    text-align: center;
   }
-  .scenario-card:hover { border-color: var(--accent); }
-  .scenario-card.selected { border-color: var(--accent); background: var(--surface2); }
+  .scenario-card:hover { border-color: var(--i-color); transform: translateY(-2px); }
+  .scenario-card.selected { border-color: var(--i-color); background: rgba(167, 139, 250, 0.1); }
 
-  .scenario-icon { font-size: 24px; margin-bottom: 6px; }
-  .scenario-name { font-weight: 500; font-size: 14px; margin-bottom: 2px; }
-  .scenario-desc { font-size: 12px; color: var(--accent-muted); }
+  .scenario-icon { font-size: 36px; margin-bottom: 10px; }
+  .scenario-name { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+  .scenario-desc { font-size: 12px; color: var(--text-muted); }
 
   /* ===== CHALLENGE ===== */
   .challenge-box {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 24px;
-    margin-bottom: 24px;
+    background: linear-gradient(135deg, rgba(102, 187, 106, 0.08), rgba(79, 195, 247, 0.05));
+    border: 1px solid rgba(102, 187, 106, 0.25);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
   }
 
   .challenge-box h3 {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 4px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--n-color);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
   }
 
-  .checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .checklist {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
   .checklist li {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    padding: 12px;
-    background: var(--surface);
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 14px 18px;
+    background: var(--surface2);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.2s;
   }
-  .checklist li:hover { border-color: var(--accent); }
-  .checklist li.checked { opacity: 0.5; text-decoration: line-through; }
+  .checklist li:hover { border-color: var(--n-color); }
+  .checklist li.checked { opacity: 0.5; text-decoration: line-through; color: var(--text-muted); }
 
   .check-box {
-    width: 18px;
-    height: 18px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
+    font-size: 13px;
+    transition: all 0.2s;
   }
-  .checklist li.checked .check-box { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .checklist li.checked .check-box { background: var(--n-color); border-color: var(--n-color); color: #000; }
 
   /* ===== WEEKLY SCHEDULE ===== */
   .week-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 24px;
   }
 
   .day-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 12px 6px;
+    border-radius: 12px;
+    padding: 14px 10px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.2s;
   }
-  .day-card:hover { border-color: var(--accent); }
-  .day-card.today { border-color: var(--accent); background: var(--surface2); font-weight: 500; }
+  .day-card:hover { border-color: var(--text-muted); }
+  .day-card.today { border-color: var(--accent); }
 
-  .day-name { font-size: 10px; text-transform: uppercase; color: var(--accent-muted); margin-bottom: 4px; }
-  .day-activity { font-size: 16px; margin-bottom: 4px; }
-  .day-duration { font-size: 10px; color: var(--accent-muted); }
+  .day-name { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 6px; }
+  .day-activity { font-size: 20px; margin-bottom: 6px; }
+  .day-duration { font-size: 10px; color: var(--text-muted); }
 
   /* ===== PROGRESS ===== */
   .progress-bar-wrap {
-    background: var(--border);
-    border-radius: 4px;
-    height: 4px;
+    background: var(--surface2);
+    border-radius: 100px;
+    height: 8px;
     margin-top: 6px;
     overflow: hidden;
   }
   .progress-bar-fill {
     height: 100%;
-    background: var(--accent);
-    transition: width 0.5s ease;
+    border-radius: 100px;
+    transition: width 1s ease;
   }
 
   /* ===== SPEECH RECOGNITION ===== */
   .mic-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
     background: var(--surface);
-    color: var(--accent-muted);
-    font-size: 16px;
+    color: var(--text-muted);
+    font-size: 22px;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
   }
-  .mic-btn:hover { border-color: var(--accent); color: var(--text); }
+  .mic-btn:hover { border-color: var(--i-color); color: var(--i-color); }
   .mic-btn.recording {
-    background: #ef4444;
-    border-color: #ef4444;
+    background: var(--accent2);
+    border-color: var(--accent2);
     color: #fff;
     animation: micPulse 1.2s infinite;
   }
 
   @keyframes micPulse {
-    0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.3); }
-    50% { box-shadow: 0 0 0 6px rgba(239,68,68,0); }
+    0%,100% { box-shadow: 0 0 0 0 rgba(232,80,122,0.4); }
+    50% { box-shadow: 0 0 0 12px rgba(232,80,122,0); }
   }
 
   /* ===== DIVIDER ===== */
-  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+
+  /* ===== SCROLL ===== */
+  .section-scroll { margin-bottom: 20px; }
 
   /* ===== TAG ===== */
   .tag {
     display: inline-block;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
-    margin-right: 4px;
+    letter-spacing: 1px;
+    margin-right: 6px;
   }
-  .tag-s { background: #fef3c7; color: #d97706; }
-  .tag-p { background: #fce7f3; color: #db2777; }
-  .tag-r { background: #e0f2fe; color: #0369a1; }
-  .tag-i { background: #f3e8ff; color: #7c3aed; }
-  .tag-n { background: #dcfce7; color: #15803d; }
+  .tag-s { background: rgba(245,166,35,0.15); color: var(--s-color); }
+  .tag-p { background: rgba(232,80,122,0.15); color: var(--p-color); }
+  .tag-r { background: rgba(79,195,247,0.15); color: var(--r-color); }
+  .tag-i { background: rgba(167,139,250,0.15); color: var(--i-color); }
+  .tag-n { background: rgba(102,187,106,0.15); color: var(--n-color); }
 
   /* ===== MONOLOGUE RESULTS ===== */
-  .monologue-result { display: none; flex-direction: column; gap: 12px; margin-top: 12px; }
+  .monologue-result {
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+  }
   .monologue-result.visible { display: flex; }
 
   .score-ring {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    border: 2px solid var(--accent);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--accent);
+    border: 3px solid var(--r-color);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--r-color);
     flex-shrink: 0;
   }
 
   /* ===== ACCORDION FOR STEPS ===== */
-  .steps-list { display: flex; flex-direction: column; gap: 8px; }
-  .step-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; }
-  .step-header { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
-  .step-num { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent-muted); width: 20px; }
-  .step-text { font-size: 13.5px; line-height: 1.5; color: var(--text); }
-
-  /* ===== TOAST NOTIFICATION ===== */
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: var(--accent);
-    color: #fff;
-    padding: 12px 20px;
-    border-radius: 6px;
-    font-size: 14px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    z-index: 1000;
-    display: none;
-    animation: slideUp 0.2s ease;
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
-  .toast.error { background: #ef4444; }
-  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .step-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+  }
+
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    color: var(--text-muted);
+    width: 28px;
+    flex-shrink: 0;
+  }
+
+  .step-text { font-size: 15px; line-height: 1.5; }
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 680px) {
-    header { padding: 16px; flex-direction: column; gap: 12px; align-items: flex-start; }
-    .api-key-area input { width: 100%; }
-    .hero { padding: 40px 16px 24px; }
+    header { padding: 16px; flex-direction: column; gap: 12px; }
+    .api-key-area input { width: 200px; }
+    .hero { padding: 32px 16px 24px; }
     .phase-nav { padding: 0 16px 24px; }
     .main { padding: 0 16px 60px; }
+    .phase-header { grid-template-columns: 1fr; }
+    .phase-badge { font-size: 48px; width: auto; }
     .week-grid { grid-template-columns: repeat(4, 1fr); }
-    .timer-display { font-size: 48px; }
+    .timer-display { font-size: 64px; }
   }
 </style>
 </head>
 <body>
 
-<div id="toast" class="toast"></div>
-
+<!-- HEADER -->
 <header>
   <div class="logo">
     <div class="logo-text">S.P.R.I.N.T.</div>
@@ -710,12 +816,14 @@
   </div>
 </header>
 
+<!-- HERO -->
 <div class="hero">
   <div class="hero-tag">🎯 5 Phase Speaking System</div>
-  <h1>Latih Bicara Inggris.</h1>
+  <h1>LATIH<br><span>BICARA</span><br>INGGRIS.</h1>
   <p>Framework S.P.R.I.N.T. membagi latihan menjadi 5 tahapan berurutan — dari melatih otot mulut hingga simulasi percakapan nyata. Didukung Gemini AI di setiap fase.</p>
 </div>
 
+<!-- PHASE NAV -->
 <div class="phase-nav">
   <div class="phase-pill active" data-phase="S" onclick="switchPhase('S')">
     <span class="phase-letter">S</span> Shadowing
@@ -737,10 +845,13 @@
   </div>
 </div>
 
+<!-- MAIN CONTENT -->
 <div class="main">
 
+  <!-- ========== PHASE S: SHADOWING ========== -->
   <div class="phase-panel active" id="panel-S">
     <div class="phase-header">
+      <div class="phase-badge" style="color:var(--s-color)">S</div>
       <div class="phase-info">
         <div class="phase-subtitle">Phase 1 · Otot Mulut & Intonasi</div>
         <h2>SHADOWING</h2>
@@ -753,7 +864,7 @@
       <div class="card-title">🎯 Pilih Topik & Generate Teks Shadowing</div>
       <div style="display:flex;gap:10px;margin-bottom:16px;">
         <input type="text" class="topic-input" id="shadowTopic" placeholder="Topik (cth: morning routine, coffee shop, weekend plans...)" style="flex:1" />
-        <select id="shadowLevel" style="width: auto;">
+        <select id="shadowLevel" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:0 16px;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;">
           <option value="beginner">Beginner</option>
           <option value="intermediate" selected>Intermediate</option>
           <option value="advanced">Advanced</option>
@@ -770,7 +881,7 @@
         <button class="btn btn-ghost" onclick="speakScript()" id="btnPlayScript">▶ Putar (TTS)</button>
         <button class="btn btn-ghost" onclick="stopScript()" id="btnStopScript" style="display:none">⏹ Stop</button>
         <button class="btn btn-ghost" onclick="generateShadowText()">🔄 Ganti Teks</button>
-        <span style="font-size:13px;color:var(--accent-muted)">💡 Tiru dengan jeda 1–2 detik setelah dengar</span>
+        <span style="font-size:13px;color:var(--text-muted)">💡 Tiru dengan jeda 1–2 detik setelah dengar</span>
       </div>
     </div>
 
@@ -795,8 +906,10 @@
     </div>
   </div>
 
+  <!-- ========== PHASE P: PHRASAL BANK ========== -->
   <div class="phase-panel" id="panel-P">
     <div class="phase-header">
+      <div class="phase-badge" style="color:var(--p-color)">P</div>
       <div class="phase-info">
         <div class="phase-subtitle">Phase 2 · Suku Cadang Kalimat</div>
         <h2>PHRASAL BANK</h2>
@@ -824,7 +937,7 @@
 
     <div class="card">
       <div class="card-title">🎯 Latihan Pakai Frasa dalam Kalimat</div>
-      <p style="font-size:13px;color:var(--accent-muted);margin-bottom:12px;">Pilih satu frasa dari bank di atas, lalu AI akan beri kamu 3 situasi untuk dipraktikkan:</p>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:12px;">Pilih satu frasa dari bank di atas, lalu AI akan beri kamu 3 situasi untuk dipraktikkan:</p>
       <input type="text" class="topic-input" id="practicePhrase" placeholder='Ketik frasa yang mau dilatih (cth: "From my perspective,...")' style="margin-bottom:12px;" />
       <button class="btn btn-primary" onclick="practicePhraseWithAI()">Latihan dengan AI</button>
       <div style="margin-top:16px;display:none" id="phrasalPracticeArea">
@@ -834,8 +947,10 @@
     </div>
   </div>
 
+  <!-- ========== PHASE R: RANDOM MONOLOGUE ========== -->
   <div class="phase-panel" id="panel-R">
     <div class="phase-header">
+      <div class="phase-badge" style="color:var(--r-color)">R</div>
       <div class="phase-info">
         <div class="phase-subtitle">Phase 3 · Kecepatan Transfer Ide</div>
         <h2>RANDOM MONOLOGUE</h2>
@@ -846,11 +961,11 @@
 
     <div class="card" style="text-align:center">
       <div class="card-title" style="text-align:left">🎲 Topik Acak Hari Ini</div>
-      <div id="randomTopicDisplay" style="font-size:32px; font-weight:700; color:var(--accent); margin:16px 0; min-height:48px;">
+      <div id="randomTopicDisplay" style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--r-color);margin:16px 0;letter-spacing:2px;min-height:64px;">
         —
       </div>
       <button class="btn btn-ghost" onclick="getRandomTopic()" style="margin-bottom:8px">🎲 Random Topik</button>
-      <span style="font-size:13px;color:var(--accent-muted);display:block;margin-top:8px">atau</span>
+      <span style="font-size:13px;color:var(--text-muted);display:block;margin-top:8px">atau</span>
       <div style="display:flex;gap:10px;margin-top:12px;justify-content:center;">
         <input type="text" class="topic-input" id="customTopicInput" placeholder="Ketik topik sendiri..." style="max-width:300px" />
         <button class="btn btn-ghost" onclick="setCustomTopic()">Set</button>
@@ -864,20 +979,20 @@
         <button class="btn btn-primary" id="btnStartTimer" onclick="startTimer()">▶ Mulai</button>
         <button class="btn btn-ghost" id="btnResetTimer" onclick="resetTimer()">↺ Reset</button>
       </div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:16px;font-size:13.5px;color:var(--accent-muted);">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;font-size:14px;color:var(--text-muted);">
         <strong style="color:var(--text);">Aturan Mutlak:</strong>
         <ul style="margin-top:8px;list-style:disc;padding-left:18px;display:flex;flex-direction:column;gap:6px;line-height:1.6">
           <li>Jangan peduli grammar salah</li>
           <li>Jangan berhenti jika mentok — pakai filler atau lanjut ke sub-topik lain</li>
           <li>Gunakan gerakan tangan jika perlu</li>
-          <li>Target: <strong>kelancaran (fluency)</strong>, bukan ketepatan (accuracy)</li>
+          <li>Target: <strong style="color:var(--r-color)">kelancaran (fluency)</strong>, bukan ketepatan (accuracy)</li>
         </ul>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">🤖 Evaluasi Monolog dengan AI</div>
-      <p style="font-size:13px;color:var(--accent-muted);margin-bottom:12px;">Setelah selesai monolog, rekam apa yang kamu katakan (atau tulis poin-poinnya) lalu minta AI beri feedback:</p>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:12px;">Setelah selesai monolog, rekam apa yang kamu katakan (atau tulis poin-poinnya) lalu minta AI beri feedback:</p>
       <textarea class="topic-input" id="monologueText" placeholder="Tulis ulang / paste transkrip monologmu di sini... Atau ceritakan: topik apa yang kamu pilih, apa yang kamu bicarakan, dan di mana kamu merasa macet." style="margin-bottom:12px;min-height:120px;"></textarea>
       <button class="btn btn-primary" onclick="evaluateMonologue()">📊 Evaluasi Fluency</button>
       <div class="monologue-result" id="monologueResultArea">
@@ -887,8 +1002,10 @@
     </div>
   </div>
 
+  <!-- ========== PHASE I: IMMERSIVE PROMPT ========== -->
   <div class="phase-panel" id="panel-I">
     <div class="phase-header">
+      <div class="phase-badge" style="color:var(--i-color)">I</div>
       <div class="phase-info">
         <div class="phase-subtitle">Phase 4 · Simulasi Interaktif</div>
         <h2>IMMERSIVE PROMPT</h2>
@@ -910,17 +1027,17 @@
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
         <div>
           <div class="card-title" style="margin-bottom:4px">💬 Percakapan</div>
-          <div style="font-size:13px;color:var(--accent-muted);" id="activeScenarioLabel"></div>
+          <div style="font-size:13px;color:var(--text-muted);" id="activeScenarioLabel"></div>
         </div>
-        <button class="btn btn-ghost" onclick="endChat()" style="font-size:12px;padding:6px 12px;">Akhiri & Evaluasi</button>
+        <button class="btn btn-ghost" onclick="endChat()" style="font-size:12px;padding:8px 14px;">Akhiri & Evaluasi</button>
       </div>
       <div class="chat-box" id="chatBox"></div>
       <div class="chat-input-area">
         <button class="mic-btn" id="micBtn" onclick="toggleMic()" title="Voice input">🎤</button>
         <textarea id="chatInput" placeholder="Ketik balasanmu dalam bahasa Inggris... (Enter = kirim)" onkeydown="handleChatEnter(event)" rows="2"></textarea>
-        <button class="btn btn-primary" onclick="sendChatMsg()" style="height:40px;width:40px;padding:0;justify-content:center;">↑</button>
+        <button class="btn btn-primary" onclick="sendChatMsg()" style="height:52px;width:52px;padding:0;justify-content:center;">↑</button>
       </div>
-      <div style="margin-top:10px;font-size:12px;color:var(--accent-muted);">
+      <div style="margin-top:10px;font-size:12px;color:var(--text-muted);">
         💡 AI akan membenarkan grammar kamu setelah kamu selesai bicara. Fokus pada konten!
       </div>
     </div>
@@ -932,8 +1049,10 @@
     </div>
   </div>
 
+  <!-- ========== PHASE N: NO-FILTER TRIAL ========== -->
   <div class="phase-panel" id="panel-N">
     <div class="phase-header">
+      <div class="phase-badge" style="color:var(--n-color)">N</div>
       <div class="phase-info">
         <div class="phase-subtitle">Phase 5 · Uji Nyali Nyata</div>
         <h2>NO-FILTER TRIAL</h2>
@@ -944,12 +1063,12 @@
 
     <div class="challenge-box">
       <h3>TANTANGAN MINGGU INI</h3>
-      <p style="font-size:13px;color:var(--accent-muted);margin-bottom:16px;">Checklist misi nyata yang harus diselesaikan. Centang setelah berhasil!</p>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:20px;">Checklist misi nyata yang harus diselesaikan. Centang setelah berhasil!</p>
       <ul class="checklist" id="challengeList"></ul>
     </div>
 
     <div class="card">
-      <div class="card-title">🤖 Persiapan Mental — Tanya AI Before Misi</div>
+      <div class="card-title">🤖 Persiapan Mental — Tanya AI Sebelum Misi</div>
       <textarea class="topic-input" id="prepInput" placeholder="Ceritakan situasi nyata yang akan kamu hadapi... (cth: besok ada meeting dengan klien dari Singapore, topik tentang Q3 performance)" style="margin-bottom:12px;min-height:100px;"></textarea>
       <button class="btn btn-primary" onclick="getMentalPrep()">Minta Strategi & Frasa Kunci</button>
       <div style="margin-top:16px;display:none" id="prepArea">
@@ -969,411 +1088,433 @@
     </div>
   </div>
 
+  <!-- ========== PHASE W: JADWAL ========== -->
   <div class="phase-panel" id="panel-W">
     <div class="phase-header">
+      <div class="phase-badge" style="color:var(--accent)">📅</div>
       <div class="phase-info">
-        <div class="phase-subtitle">Jadwal Implementation Mingguan</div>
+        <div class="phase-subtitle">Jadwal Implementasi Mingguan</div>
         <h2>WEEKLY PLAN</h2>
-        <p>Rencana latihan berulang untuk menjaga konsistensi. Klik pada hari untuk melihat detail atau menandai komitmen latihan hari ini.</p>
+        <p>Komitmen minimal untuk hasil maksimal. Ikuti jadwal ini secara konsisten selama 4–8 minggu untuk merasakan perubahan nyata dalam speaking ability kamu.</p>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-title">📅 Agenda Rutin S.P.R.I.N.T.</div>
+      <div class="card-title">📅 Jadwal Mingguan</div>
       <div class="week-grid" id="weekGrid"></div>
-      <div id="dayDetailBox" style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:16px;font-size:14px;display:none;">
-        <h4 id="detailDayName" style="font-weight:700;margin-bottom:6px;">—</h4>
-        <p id="detailDayDesc" style="color:var(--accent-muted);line-height:1.5">—</p>
-        <button class="btn btn-primary" id="btnDoneDay" style="margin-top:12px;padding:6px 12px;font-size:12px;">Selesai Latihan Hari Ini ✅</button>
-      </div>
     </div>
 
     <div class="card">
-      <div class="card-title">📊 Tracker Progres Fase</div>
-      <p style="font-size:13px;color:var(--accent-muted);margin-bottom:16px;">Total log aktivitas per fase latihan (diperbarui otomatis saat Anda melakukan aksi):</p>
-      <div id="progressStatsArea" style="display:flex;flex-direction:column;gap:12px;"></div>
+      <div class="card-title">📈 Progress Tracker</div>
+      <div style="display:flex;flex-direction:column;gap:18px" id="progressTracker"></div>
       <div class="divider"></div>
-      <button class="btn btn-danger" onclick="resetProgress()" style="padding:6px 12px;font-size:12px;">Reset Semua Progress</button>
+      <button class="btn btn-ghost" onclick="resetProgress()">↺ Reset Progress</button>
     </div>
 
     <div class="card">
-      <div class="card-title">💡 AI Coach — Konsultasi Kendala</div>
-      <p style="font-size:13px;color:var(--accent-muted);margin-bottom:12px;">Punya pertanyaan seputar cara belajar, stuck, atau kurang percaya diri? Tanyakan ke AI Coach:</p>
-      <textarea class="topic-input" id="coachInput" placeholder="Contoh: Saya selalu grogi kalau mau ngomong sama bule, gimana cara ngatasinnya? Atau: Gimana cara konsisten kalau sibuk kerja?" style="margin-bottom:12px行业."></textarea>
-      <button class="btn btn-primary" onclick="askCoach()">Tanya Coach AI</button>
+      <div class="card-title">🤖 Personal Coach — Tanya AI Apa Saja</div>
+      <textarea class="topic-input" id="coachInput" placeholder="Tanya apa saja tentang journey belajar speaking kamu... (cth: sudah 2 minggu latihan, vocabulary masih terbatas, gimana cara cepatkan improvement?)" style="margin-bottom:12px;min-height:100px;"></textarea>
+      <button class="btn btn-primary" onclick="askCoach()">Tanya Coach</button>
       <div style="margin-top:16px;display:none" id="coachArea">
-        <div class="ai-label"><div class="ai-dot"></div> Solusi dari Coach AI</div>
-        <div class="ai-output" id="coachOutput" style="font-size:14px;"></div>
+        <div class="ai-label"><div class="ai-dot"></div> Saran dari AI Coach</div>
+        <div class="ai-output" id="coachOutput"></div>
       </div>
     </div>
   </div>
 
-</div>
+</div><!-- /main -->
 
 <script>
-let geminiApiKey = localStorage.getItem('gemini_api_key') || '';
-let currentPhase = 'S';
-
-// Phrasal Bank Data
-const phrasalBank = [
-  { text: "From my perspective...", category: "Opinion", usage: "From my perspective, this feature adds the most value." },
-  { text: "To put it simply...", category: "Clarification", usage: "To put it simply, we are changing our core strategy." },
-  { text: "Moving on to the next point...", category: "Transition", usage: "Moving on to the next point, let's look at the pricing model." },
-  { text: "That's an interesting question...", category: "Filler / Stall", usage: "That's an interesting question. Let me gather my thoughts." },
-  { text: "In other words...", category: "Clarification", usage: "In other words, the project is delayed by two weeks." },
-  { text: "I'd like to add that...", category: "Expansion", usage: "I'd like to add that our client is completely on board." }
-];
-
-// Immersive Prompt Scenarios
-const scenarios = [
-  { id: 'coffee', name: 'Ordering Coffee', icon: '☕', desc: 'Pesan kopi custom di kafe luar negeri.' },
-  { id: 'interview', name: 'Job Interview', icon: '💼', desc: 'Wawancara kerja posisi managerial.' },
-  { id: 'meeting', name: 'Project Update', icon: '📊', desc: 'Sampaikan update mendadak ke tim / atasan.' },
-  { id: 'complain', name: 'Filing a Complaint', icon: '🤬', desc: 'Komplain masalah delay bagasi di bandara.' }
-];
-
-// Random Monologue Topics
-const randomTopics = [
-  "Artificial Intelligence taking over jobs",
-  "Your absolute favorite childhood memory",
-  "Why coffee shops are getting too expensive",
-  "The perfect structure for a remote team",
-  "Should public transport be free for everyone?",
-  "How to maintain work-life balance as a parent",
-  "The best movie you have watched this year"
-];
-
-// Weekly Schedule
-const weeklySchedule = [
-  { day: 'Mon', name: 'Shadowing Focus', desc: 'Fase S: Latih 2 teks baru (10 menit). Target kejelasan pengucapan.', duration: '10m' },
-  { day: 'Tue', name: 'Phrasal Storage', desc: 'Fase P: Ambil 1 frasa baru, masukkan ke dalam 3 kalimat buatan sendiri.', duration: '15m' },
-  { day: 'Wed', name: 'Monologue Blitz', desc: 'Fase R: Tekan tombol acak, bicara non-stop selama 60 detik tanpa henti!', duration: '5m' },
-  { day: 'Thu', name: 'Immersive Day', desc: 'Fase I: Pilih skenario "Project Update", chat 5-10 giliran dengan AI.', duration: '15m' },
-  { day: 'Fri', name: 'Shadow & Review', desc: 'Fase S & P: Ulangi teks hari Senin, review frasa hari Selasa.', duration: '10m' },
-  { day: 'Sat', name: 'No-Filter Misi', desc: 'Fase N: Selesaikan satu misi nyata (cth: join discord chat internasional).', duration: 'Varies' },
-  { day: 'Sun', name: 'Rest & Strategy', desc: 'Fase W: Evaluasi statistik progres, konsultasi hambatan minggu ini dengan Coach.', duration: '5m' }
-];
-
-const progressPhases = [
-  { code: 'S', name: 'Shadowing Text Generated', key: 'prog_S' },
-  { code: 'P', name: 'Phrasal Generated/Practiced', key: 'prog_P' },
-  { code: 'R', name: 'Monologue Evaluation Done', key: 'prog_R' },
-  { code: 'I', name: 'Immersive Chat Session Done', key: 'prog_I' },
-  { code: 'N', name: 'No-Filter Debrief Logged', key: 'prog_N' }
-];
-
-// State variables for application
+// ========== STATE ==========
+let apiKey = localStorage.getItem('sprint_gemini_key') || '';
 let timerInterval = null;
 let timerSeconds = 60;
-let currentSpeechSynthesis = null;
-let chatHistory = [];
-let currentScenarioId = '';
-let speechRecognition = null;
+let timerRunning = false;
+let speechSynth = window.speechSynthesis;
+let currentUtterance = null;
+let recognition = null;
 let isRecording = false;
+let chatHistory = [];
+let currentScenario = '';
+let activeSpeechTarget = null;
 
-window.addEventListener('DOMContentLoaded', () => {
-  if (geminiApiKey) {
-    document.getElementById('apiKeyInput').value = geminiApiKey;
+// ========== API KEY ==========
+function saveApiKey() {
+  apiKey = document.getElementById('apiKeyInput').value.trim();
+  localStorage.setItem('sprint_gemini_key', apiKey);
+  showToast('API Key tersimpan! ✅');
+}
+
+function getApiKey() {
+  if (!apiKey) {
+    apiKey = document.getElementById('apiKeyInput').value.trim();
   }
+  return apiKey;
+}
+
+// On load
+window.addEventListener('load', () => {
+  if (apiKey) document.getElementById('apiKeyInput').value = apiKey;
   initPhrasalBank();
   initScenarios();
   initChallenges();
-  initWeeklySchedule();
+  initWeekGrid();
   initProgressTracker();
+  getRandomTopic();
 });
 
-// Toast Helper
-function showToast(msg, isError = false) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  if (isError) t.classList.add('error');
-  else t.classList.remove('error');
-  t.style.display = 'block';
-  setTimeout(() => { t.style.display = 'none'; }, 2500);
-}
-
-// API Key Manager
-function saveApiKey() {
-  const key = document.getElementById('apiKeyInput').value.trim();
-  if(!key) {
-    showToast('Key tidak boleh kosong', true);
-    return;
+// ========== GEMINI API ==========
+async function callGemini(prompt, systemInstruction = '') {
+  const key = getApiKey();
+  if (!key) {
+    showToast('❌ Masukkan Gemini API Key dulu!', true);
+    throw new Error('No API key');
   }
-  localStorage.setItem('gemini_api_key', key);
-  geminiApiKey = key;
-  showToast('Gemini API Key disimpan!');
-}
 
-// Switch Phase
-function switchPhase(phaseCode) {
-  currentPhase = phaseCode;
-  document.querySelectorAll('.phase-pill').forEach(p => {
-    if(p.getAttribute('data-phase') === phaseCode) p.classList.add('active');
-    else p.classList.remove('active');
-  });
-  document.querySelectorAll('.phase-panel').forEach(panel => {
-    if(panel.id === `panel-${phaseCode}`) panel.classList.add('active');
-    else panel.classList.remove('active');
-  });
-  stopScript();
-}
-
-// API Connector
-async function callGemini(promptText) {
-  if (!geminiApiKey) {
-    showToast('Harap masukkan Gemini API Key di bagian atas terlebih dahulu!', true);
-    switchPhase('S');
-    throw new Error("Missing API Key");
+  const messages = [];
+  if (systemInstruction) {
+    messages.push({ role: 'user', parts: [{ text: systemInstruction }] });
+    messages.push({ role: 'model', parts: [{ text: 'Understood. I will follow these instructions.' }] });
   }
-  try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`;
-    const response = await fetch(url, {
+  messages.push({ role: 'user', parts: [{ text: prompt }] });
+
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${key}`,
+    {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
-    });
-    const data = await response.json();
-    if (data.candidates && data.candidates[0].content.parts[0].text) {
-      return data.candidates[0].content.parts[0].text;
-    } else if (data.error) {
-      throw new Error(data.error.message);
+      body: JSON.stringify({
+        contents: messages,
+        generationConfig: { temperature: 0.85, maxOutputTokens: 1200 }
+      })
     }
-    throw new Error("Format respons tidak dikenal");
-  } catch (err) {
-    console.error(err);
-    showToast(`Error API: ${err.message}`, true);
-    throw err;
+  );
+
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.error?.message || 'API error');
   }
+
+  const data = await response.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
 }
 
-// Phase S: Shadowing Core
+async function callGeminiChat(messages) {
+  const key = getApiKey();
+  if (!key) { showToast('❌ Masukkan Gemini API Key dulu!', true); throw new Error('No API key'); }
+
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${key}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: messages,
+        generationConfig: { temperature: 0.9, maxOutputTokens: 800 }
+      })
+    }
+  );
+
+  if (!response.ok) { const err = await response.json(); throw new Error(err.error?.message || 'API error'); }
+  const data = await response.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+}
+
+// ========== PHASE SWITCHING ==========
+function switchPhase(phase) {
+  document.querySelectorAll('.phase-pill').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.phase-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.phase-pill[data-phase="${phase}"]`).classList.add('active');
+  document.getElementById(`panel-${phase}`).classList.add('active');
+}
+
+// ========== TOAST ==========
+function showToast(msg, isError = false) {
+  const t = document.createElement('div');
+  t.style.cssText = `position:fixed;bottom:30px;right:30px;background:${isError?'var(--accent2)':'var(--accent4)'};color:${isError?'#fff':'#000'};padding:12px 22px;border-radius:10px;font-weight:700;font-size:14px;z-index:9999;animation:fadeIn 0.3s ease;`;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+// ========== PHASE S: SHADOWING ==========
 async function generateShadowText() {
-  const topic = document.getElementById('shadowTopic').value.trim() || 'daily life conversation';
+  const topic = document.getElementById('shadowTopic').value.trim() || 'morning routine';
   const level = document.getElementById('shadowLevel').value;
   const btn = document.getElementById('btnGenShadow');
-  
   btn.disabled = true;
-  const card = document.getElementById('shadowScriptCard');
-  const box = document.getElementById('shadowScript');
-  card.style.display = 'block';
-  box.innerHTML = 'Generating...';
-  box.className = 'script-box';
+  btn.textContent = '⏳ Generating...';
+
+  const levelDesc = { beginner: 'simple vocabulary, short sentences', intermediate: 'natural conversational English, moderate complexity', advanced: 'sophisticated vocabulary, complex sentences, idioms' };
 
   try {
-    const prompt = `Buatkan satu paragraf teks percakapan/monolog pendek bahasa Inggris untuk latihan SHADOWING. Topik: "${topic}". Level kesulitan: ${level}. Panjang sekitar 4-6 kalimat panjang medium yang natural. Teks langsung berikan isinya saja tanpa pengantar atau penutup apapun.`;
-    const text = await callGemini(prompt);
-    
-    // Convert text into interactive span elements for word-highlighting visualization
-    const words = text.trim().split(/\s+/);
-    box.innerHTML = words.map((w, idx) => `<span class="word" id="sw-${idx}">${w}</span>`).join(' ');
-    btn.disabled = false;
-    updateProgress('S');
+    const text = await callGemini(
+      `Generate a natural, engaging English monologue about "${topic}" for shadowing practice. 
+Level: ${level} (${levelDesc[level]}).
+Length: 5-7 sentences, about 80-100 words.
+Style: Natural spoken English with contractions, not formal writing.
+Use varied intonation cues by mixing questions, exclamations, and statements.
+Output ONLY the monologue text, no labels or explanations.`
+    );
+
+    document.getElementById('shadowScriptCard').style.display = 'block';
+    const script = document.getElementById('shadowScript');
+    script.innerHTML = text.trim().split(' ').map((w, i) =>
+      `<span class="word" id="word-${i}">${w} </span>`
+    ).join('');
+    showToast('Teks shadowing siap! ✅');
   } catch (e) {
-    box.innerHTML = 'Gagal memuat teks. Periksa API Key Anda.';
-    btn.disabled = false;
+    showToast('❌ Error: ' + e.message, true);
   }
+
+  btn.disabled = false;
+  btn.textContent = '✨ Generate Teks';
 }
 
 function speakScript() {
-  const box = document.getElementById('shadowScript');
-  const text = box.innerText;
-  if(!text || text.startsWith('Generating')) return;
-
+  const script = document.getElementById('shadowScript');
+  if (!script) return;
+  const text = script.innerText;
   stopScript();
 
-  const synth = window.speechSynthesis;
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = 'en-US';
-  utter.rate = 0.85; 
+  const words = document.querySelectorAll('.word');
+  let wordIndex = 0;
 
-  const spans = box.querySelectorAll('.word');
-  spans.forEach(s => s.classList.remove('highlighted', 'done'));
+  currentUtterance = new SpeechSynthesisUtterance(text);
+  currentUtterance.lang = 'en-US';
+  currentUtterance.rate = 0.85;
 
-  let currentWordIdx = 0;
-  utter.onboundary = (event) => {
-    if (event.name === 'word') {
-      spans.forEach(s => s.classList.remove('highlighted'));
-      if(spans[currentWordIdx]) {
-        spans[currentWordIdx].classList.add('highlighted');
-        for(let i=0; i<currentWordIdx; i++) spans[i].classList.add('done');
-        currentWordIdx++;
-      }
+  currentUtterance.onboundary = (e) => {
+    words.forEach(w => w.classList.remove('highlighted'));
+    if (words[wordIndex]) {
+      words[wordIndex].classList.add('highlighted');
+      wordIndex++;
     }
   };
 
-  utter.onend = () => {
-    spans.forEach(s => s.classList.remove('highlighted'));
+  currentUtterance.onend = () => {
+    words.forEach(w => { w.classList.remove('highlighted'); w.classList.add('done'); });
     document.getElementById('btnPlayScript').style.display = 'inline-flex';
     document.getElementById('btnStopScript').style.display = 'none';
   };
 
+  speechSynth.speak(currentUtterance);
   document.getElementById('btnPlayScript').style.display = 'none';
   document.getElementById('btnStopScript').style.display = 'inline-flex';
-
-  currentSpeechSynthesis = utter;
-  synth.speak(utter);
 }
 
 function stopScript() {
-  if (window.speechSynthesis) {
-    window.speechSynthesis.cancel();
-  }
+  speechSynth.cancel();
   document.getElementById('btnPlayScript').style.display = 'inline-flex';
   document.getElementById('btnStopScript').style.display = 'none';
 }
 
 async function getShadowFeedback() {
-  const val = document.getElementById('shadowFeedbackInput').value.trim();
-  if(!val) { showToast('Ceritakan kendala Anda dulu!', true); return; }
+  const input = document.getElementById('shadowFeedbackInput').value.trim();
+  if (!input) { showToast('Isi dulu kesulitan shadowingmu!', true); return; }
 
-  const area = document.getElementById('shadowFeedbackArea');
+  document.getElementById('shadowFeedbackArea').style.display = 'block';
   const out = document.getElementById('shadowFeedbackOutput');
-  area.style.display = 'block';
   out.textContent = '';
   out.classList.add('loading');
 
   try {
-    const prompt = `Seorang pengguna sedang latihan speaking dengan metode Shadowing dan mengalami kesulitan berikut:\n\n"${val}"\n\nBerikan tips praktis, instruksi lidah/mulut jika ada kata susah, dan feedback korektif yang menenangkan dengan bahasa Indonesia yang singkat padat langsung ke inti masalah.`;
-    const res = await callGemini(prompt);
+    const result = await callGemini(
+      `Kamu adalah coach speaking English yang berpengalaman. Seorang learner Indonesia memberikan feedback tentang kesulitan shadowing mereka:\n\n"${input}"\n\nBerikan feedback yang spesifik dan actionable dalam bahasa Indonesia. Sertakan:\n1. Penjelasan kenapa ini terjadi\n2. Teknik spesifik untuk mengatasinya (dengan contoh)\n3. Latihan konkret yang bisa langsung dicoba\n\nGunakan bahasa yang encouraging dan praktis.`
+    );
     out.classList.remove('loading');
-    out.textContent = res;
-  } catch(e) { out.classList.remove('loading'); }
+    out.textContent = result;
+  } catch (e) {
+    out.classList.remove('loading');
+    out.textContent = '❌ Error: ' + e.message;
+  }
 }
 
-// Phase P: Phrasal Bank Core
+// ========== PHASE P: PHRASAL BANK ==========
+const defaultPhrases = [
+  { cat: 'Mengulur Waktu', phrase: 'Well, that\'s an interesting question...', usage: 'Saat butuh waktu berpikir sebelum menjawab' },
+  { cat: 'Mengulur Waktu', phrase: 'Let me see... / Let me think about that...', usage: 'Pause natural tanpa terlihat diam canggung' },
+  { cat: 'Mengulur Waktu', phrase: 'That\'s a good point. So...', usage: 'Acknowledge pertanyaan sambil formulasikan jawaban' },
+  { cat: 'Menyatakan Pendapat', phrase: 'From my perspective,...', usage: 'Membuka opini secara sopan dan assertif' },
+  { cat: 'Menyatakan Pendapat', phrase: 'Personally, I think...', usage: 'Menekankan ini pendapat pribadi, bukan fakta mutlak' },
+  { cat: 'Menyatakan Pendapat', phrase: 'If you ask me,...', usage: 'Memberi opini dengan nada percaya diri' },
+  { cat: 'Tidak Setuju', phrase: 'I see your point, but...', usage: 'Menolak dengan sopan, acknowledge dulu baru counter' },
+  { cat: 'Tidak Setuju', phrase: 'That\'s fair, however...', usage: 'Setuju sebagian, tapi ada reservasi' },
+  { cat: 'Menambahkan Poin', phrase: 'Not only that, but also...', usage: 'Menambahkan argumen pendukung' },
+  { cat: 'Menambahkan Poin', phrase: 'On top of that,...', usage: 'Stack poin di atas poin sebelumnya' },
+  { cat: 'Menyimpulkan', phrase: 'At the end of the day,...', usage: 'Menutup argumen dengan kesimpulan utama' },
+  { cat: 'Menyimpulkan', phrase: 'So, to sum it up,...', usage: 'Formal closing dalam presentasi atau diskusi' },
+];
+
 function initPhrasalBank() {
   const grid = document.getElementById('phrasalGrid');
-  grid.innerHTML = phrasalBank.map((p, idx) => `
-    <div class="phrasal-card" onclick="selectPhrasal('${p.text.replace(/'/g, "\\'")}')">
-      <div class="phrasal-category">${p.category}</div>
-      <div class="phrasal-text">${p.text}</div>
-      <div class="phrasal-usage">e.g. "${p.usage}"</div>
-      <button class="btn-speak-phrase" onclick="event.stopPropagation(); speakText('${p.text.replace(/'/g, "\\'")}')">🔊</button>
+  grid.innerHTML = defaultPhrases.map((p, i) => `
+    <div class="phrasal-card" onclick="selectPhrase('${p.phrase.replace(/'/g, "\\'")}')">
+      <button class="btn-speak-phrase" onclick="event.stopPropagation();speakPhrase('${p.phrase.replace(/'/g, "\\'")}')">🔊</button>
+      <div class="phrasal-category">${p.cat}</div>
+      <div class="phrasal-text">${p.phrase}</div>
+      <div class="phrasal-usage">${p.usage}</div>
     </div>
   `).join('');
 }
 
-function selectPhrasal(txt) {
-  document.getElementById('practicePhrase').value = txt;
-  showToast(`Terpilih: "${txt}". Siap dilatih di form bawah.`);
+function speakPhrase(phrase) {
+  speechSynth.cancel();
+  const utt = new SpeechSynthesisUtterance(phrase);
+  utt.lang = 'en-US';
+  utt.rate = 0.8;
+  speechSynth.speak(utt);
 }
 
-function speakText(txt) {
-  if(!window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(txt);
-  utter.lang = 'en-US';
-  window.speechSynthesis.speak(utter);
+function selectPhrase(phrase) {
+  document.getElementById('practicePhrase').value = phrase;
+  document.querySelector('.phase-pill[data-phase="P"]').scrollIntoView({ behavior: 'smooth' });
 }
 
 async function generateNewPhrases() {
-  const sit = document.getElementById('phrasalSituation').value.trim() || 'general business conversation';
-  const area = document.getElementById('newPhrasalsArea');
+  const situation = document.getElementById('phrasalSituation').value.trim();
+  if (!situation) { showToast('Isi situasinya dulu!', true); return; }
+
+  document.getElementById('newPhrasalsArea').style.display = 'block';
   const out = document.getElementById('newPhrasalsOutput');
-  area.style.display = 'block';
   out.textContent = '';
   out.classList.add('loading');
 
   try {
-    const prompt = `Berikan 3 set frasa native (phrasal chunk/signposting) bahasa Inggris yang sangat sering dipakai pada situasi: "${sit}". Format tampilan per frasa harus bersih: \n Frasa: [Teks]\nArti/Fungsi: [Penjelasan]\nContoh Kalimat: "[Contoh]"`;
-    const res = await callGemini(prompt);
+    const result = await callGemini(
+      `Generate 6 highly useful English filler phrases and signposting expressions specifically for this situation: "${situation}"\n\nFormat each as:\n[CATEGORY] | [PHRASE] | [Kapan digunakan (bahasa Indonesia)]\n\nMake them practical, natural, and immediately usable. Focus on phrases native speakers actually use, not textbook English.`
+    );
     out.classList.remove('loading');
-    out.textContent = res;
-    updateProgress('P');
-  } catch(e) { out.classList.remove('loading'); }
+    out.textContent = result;
+  } catch (e) {
+    out.classList.remove('loading');
+    out.textContent = '❌ Error: ' + e.message;
+  }
 }
 
 async function practicePhraseWithAI() {
   const phrase = document.getElementById('practicePhrase').value.trim();
-  if(!phrase) { showToast('Ketik atau klik frasa yang ingin dilatih!', true); return; }
+  if (!phrase) { showToast('Pilih atau ketik frasa dulu!', true); return; }
 
-  const area = document.getElementById('phrasalPracticeArea');
+  document.getElementById('phrasalPracticeArea').style.display = 'block';
   const out = document.getElementById('phrasalPracticeOutput');
-  area.style.display = 'block';
   out.textContent = '';
   out.classList.add('loading');
 
   try {
-    const prompt = `Saya ingin melatih frasa bahasa Inggris ini agar refleks: "${phrase}". Berikan saya 3 buah instruksi skenario pendek dalam bahasa Indonesia agar saya mencoba mengucapkan frasa tersebut di dunia nyata. Contoh: "Instruksi 1: Bayangkan kamu di rapat sedang tidak setuju dengan bos, katakan..."`;
-    const res = await callGemini(prompt);
+    const result = await callGemini(
+      `Buat 3 situasi latihan untuk menggunakan frasa ini: "${phrase}"\n\nUntuk setiap situasi:\n1. Deskripsikan konteks (dalam bahasa Indonesia)\n2. Berikan contoh kalimat lengkap yang menggunakan frasa tersebut (dalam bahasa Inggris)\n3. Berikan 1 variasi alternatif\n\nBuat situasinya relevan untuk profesional Indonesia.`
+    );
     out.classList.remove('loading');
-    out.textContent = res;
-    updateProgress('P');
-  } catch(e) { out.classList.remove('loading'); }
+    out.textContent = result;
+  } catch (e) {
+    out.classList.remove('loading');
+    out.textContent = '❌ Error: ' + e.message;
+  }
 }
 
-// Phase R: Random Monologue Core
+// ========== PHASE R: RANDOM MONOLOGUE ==========
+const randomTopics = [
+  'Kopi', 'Hujan', 'Kemacetan', 'Weekends', 'Makanan Favorit',
+  'Social Media', 'Mimpi', 'Teknologi', 'Keluarga', 'Karir Impian',
+  'Traveling', 'Hobi', 'Buku Terakhir', 'Film Favorit', 'Cuaca Hari Ini',
+  'Rencana 5 Tahun', 'Kesuksesan', 'Persahabatan', 'Olahraga', 'Musik',
+  'Tas yang Kamu Bawa', 'Kursi yang Kamu Duduki', 'Jendela di Hadapanmu', 'Makanan Tadi',
+];
+
+let currentTopic = '';
+
 function getRandomTopic() {
-  const idx = Math.floor(Math.random() * randomTopics.length);
-  document.getElementById('randomTopicDisplay').innerText = randomTopics[idx];
+  const t = randomTopics[Math.floor(Math.random() * randomTopics.length)];
+  currentTopic = t;
+  document.getElementById('randomTopicDisplay').textContent = t.toUpperCase();
 }
 
 function setCustomTopic() {
-  const val = document.getElementById('customTopicInput').value.trim();
-  if(!val) return;
-  document.getElementById('randomTopicDisplay').innerText = val;
+  const t = document.getElementById('customTopicInput').value.trim();
+  if (t) {
+    currentTopic = t;
+    document.getElementById('randomTopicDisplay').textContent = t.toUpperCase();
+    document.getElementById('customTopicInput').value = '';
+  }
 }
 
 function startTimer() {
-  if(timerInterval) return;
-  const btn = document.getElementById('btnStartTimer');
-  btn.disabled = true;
-  
+  if (timerRunning) return;
+  timerRunning = true;
+  document.getElementById('btnStartTimer').textContent = '⏸ Running...';
+  document.getElementById('btnStartTimer').disabled = true;
+
   timerInterval = setInterval(() => {
     timerSeconds--;
+    const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+    const s = (timerSeconds % 60).toString().padStart(2, '0');
     const display = document.getElementById('timerDisplay');
-    
-    let m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
-    let s = (timerSeconds % 60).toString().padStart(2, '0');
-    display.innerText = `${m}:${s}`;
+    display.textContent = `${m}:${s}`;
 
     if (timerSeconds <= 10) display.classList.add('urgent');
-    else display.classList.remove('urgent');
 
-    if(timerSeconds <= 0) {
+    if (timerSeconds <= 0) {
       clearInterval(timerInterval);
-      timerInterval = null;
-      btn.disabled = false;
-      showToast('Waktu habis! Sesi monolog selesai 🌟');
+      timerRunning = false;
+      display.textContent = '⏰ DONE!';
+      display.classList.remove('urgent');
+      document.getElementById('btnStartTimer').textContent = '▶ Mulai';
+      document.getElementById('btnStartTimer').disabled = false;
+      showToast('Monolog selesai! Luar biasa! 🎉');
+      // Track progress
+      updateProgress('R');
     }
   }, 1000);
 }
 
 function resetTimer() {
   clearInterval(timerInterval);
-  timerInterval = null;
+  timerRunning = false;
   timerSeconds = 60;
-  const display = document.getElementById('timerDisplay');
-  display.innerText = "01:00";
-  display.classList.remove('urgent');
+  document.getElementById('timerDisplay').textContent = '01:00';
+  document.getElementById('timerDisplay').classList.remove('urgent');
+  document.getElementById('btnStartTimer').textContent = '▶ Mulai';
   document.getElementById('btnStartTimer').disabled = false;
 }
 
 async function evaluateMonologue() {
-  const txt = document.getElementById('monologueText').value.trim();
-  if(!txt) { showToast('Tulis poin atau transkrip monolog Anda lebih dulu!', true); return; }
+  const text = document.getElementById('monologueText').value.trim();
+  if (!text) { showToast('Isi transkrip monologmu dulu!', true); return; }
 
   const area = document.getElementById('monologueResultArea');
-  const out = document.getElementById('monologueOutput');
   area.classList.add('visible');
+  const out = document.getElementById('monologueOutput');
   out.textContent = '';
   out.classList.add('loading');
 
   try {
-    const topicName = document.getElementById('randomTopicDisplay').innerText;
-    const prompt = `Saya baru saja melakukan monolog spontan selama 1 menit tanpa henti untuk topik "${topicName}". Berikut rekaman poin pemikiran/transkrip saya:\n\n"${txt}"\n\nBerikan evaluasi FLUENSI (Kelancaran) dengan format:\n1. Skor Kelancaran perkiraan (0-100)\n2. Analisis hambatan (kenapa macet/blocking)\n3. Alternatif kalimat/filler pengisi jeda yang seharusnya saya pakai agar terlihat mengalir lancar.\n\nBahasa Indonesia padat, tajam, terarah.`;
-    const res = await callGemini(prompt);
+    const result = await callGemini(
+      `Kamu adalah coach fluency English. Seorang learner baru saja melakukan monolog 60 detik dalam bahasa Inggris tentang "${currentTopic || 'topik pilihan'}". Ini adalah catatan/transkrip mereka:\n\n"${text}"\n\nBerikan evaluasi yang encouraging dan konkret dalam bahasa Indonesia:\n\n1. **Fluency Score** (1-10): Estimasi kelancaran berdasarkan deskripsi\n2. **Yang Sudah Bagus**: 2-3 hal positif spesifik\n3. **Area Improvement**: 2 hal konkret yang bisa ditingkatkan\n4. **Quick Fix**: 1 teknik yang bisa langsung diterapkan di sesi berikutnya\n5. **Topik Berikutnya**: Rekomendasikan topik yang lebih menantang untuk sesi selanjutnya\n\nJaga tone yang supportive dan motivating.`
+    );
     out.classList.remove('loading');
-    out.textContent = res;
-    updateProgress('R');
-  } catch(e) { out.classList.remove('loading'); }
+    out.textContent = result;
+  } catch (e) {
+    out.classList.remove('loading');
+    out.textContent = '❌ Error: ' + e.message;
+  }
 }
 
-// Phase I: Immersive Prompt Core
+// ========== PHASE I: IMMERSIVE CHAT ==========
+const scenarios = [
+  { icon: '☕', name: 'Casual Friend Chat', desc: 'Ngobrol santai seperti teman lama yang ketemu lagi' },
+  { icon: '💼', name: 'Job Interview', desc: 'Wawancara kerja di perusahaan internasional' },
+  { icon: '🤝', name: 'Business Meeting', desc: 'Rapat dengan business partner dari luar negeri' },
+  { icon: '✈️', name: 'Travel Conversation', desc: 'Percakapan saat traveling di luar negeri' },
+  { icon: '🍽️', name: 'Restaurant / Cafe', desc: 'Memesan makanan dan ngobrol dengan staff' },
+  { icon: '📞', name: 'Customer Service Call', desc: 'Menelepon customer service atau helpdesk' },
+  { icon: '🎓', name: 'Academic Discussion', desc: 'Diskusi akademik atau seminar' },
+  { icon: '🌐', name: 'Networking Event', desc: 'Perkenalan diri di event profesional' },
+];
+
 function initScenarios() {
-  const grid = document.getElementById('scenarioGrid');
-  grid.innerHTML = scenarios.map(s => `
-    <div class="scenario-card" id="scen-${s.id}" onclick="selectScenario('${s.id}')">
+  document.getElementById('scenarioGrid').innerHTML = scenarios.map((s, i) => `
+    <div class="scenario-card" id="sc-${i}" onclick="selectScenario(${i})">
       <div class="scenario-icon">${s.icon}</div>
       <div class="scenario-name">${s.name}</div>
       <div class="scenario-desc">${s.desc}</div>
@@ -1381,40 +1522,128 @@ function initScenarios() {
   `).join('');
 }
 
-function selectScenario(sid) {
+function selectScenario(i) {
   document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('selected'));
-  document.getElementById(`scen-${sid}`).classList.add('selected');
-  currentScenarioId = sid;
-  startChatSession(scenarios.find(s => s.id === sid).name);
+  document.getElementById(`sc-${i}`).classList.add('selected');
+  startScenario(scenarios[i].name, scenarios[i].desc);
 }
 
 function startCustomScenario() {
-  const val = document.getElementById('customScenario').value.trim();
-  if(!val) { showToast('Ketik skenario kustom Anda!', true); return; }
-  currentScenarioId = 'custom';
-  startChatSession(val);
+  const s = document.getElementById('customScenario').value.trim();
+  if (!s) { showToast('Isi skenario dulu!', true); return; }
+  startScenario(s, s);
 }
 
-function startChatSession(title) {
+async function startScenario(name, desc) {
+  currentScenario = name;
+  chatHistory = [];
+  document.getElementById('activeScenarioLabel').textContent = `Skenario: ${name}`;
   document.getElementById('scenarioSelectorCard').style.display = 'none';
   document.getElementById('chatCard').style.display = 'block';
   document.getElementById('chatEvalCard').style.display = 'none';
-  document.getElementById('activeScenarioLabel').innerText = `Skenario Aktif: ${title}`;
-  
+
+  const chatBox = document.getElementById('chatBox');
   chatBox.innerHTML = '';
-  chatHistory = [];
-  
-  appendChatMsg('ai', `Hello! I'm your practice partner for this scenario: "${title}". Let's begin. What is on your mind? You can start talking.`);
+
+  // System context
+  const systemCtx = `You are an English conversation partner for an Indonesian learner practicing speaking. 
+Scenario: ${name} — ${desc}
+Rules:
+1. Always respond in English naturally as fits the scenario
+2. Keep responses conversational and concise (2-4 sentences)
+3. After each of your responses, add a brief grammar correction note in Indonesian if the user made grammar mistakes, formatted as: [📝 Koreksi: ...]
+4. If grammar was perfect, add: [✅ Grammar bagus!]
+5. Occasionally ask follow-up questions to keep conversation flowing
+6. Be encouraging and patient`;
+
+  chatHistory.push({ role: 'user', parts: [{ text: systemCtx }] });
+  chatHistory.push({ role: 'model', parts: [{ text: 'Understood! I\'ll follow all the rules.' }] });
+
+  // Generate opening line
+  try {
+    const opener = await callGeminiChat([
+      ...chatHistory,
+      { role: 'user', parts: [{ text: `Start the conversation naturally as a ${name} scenario opener. Just the opening line, no correction needed for this.` }] }
+    ]);
+    chatHistory.push({ role: 'user', parts: [{ text: `Start the conversation as ${name}` }] });
+    chatHistory.push({ role: 'model', parts: [{ text: opener }] });
+    addChatBubble('ai', opener);
+  } catch (e) {
+    addChatBubble('ai', `Hello! Welcome to our ${name} practice. How can I help you today?`);
+  }
 }
 
-function appendChatMsg(sender, text) {
-  const box = document.getElementById('chatBox');
-  const d = document.createElement('div');
-  d.className = `chat-msg ${sender}`;
-  d.innerText = text;
-  box.appendChild(d);
-  box.scrollTop = box.scrollHeight;
-  chatHistory.push({ role: sender === 'user' ? 'user' : 'model', parts: [{ text: text }] });
+function addChatBubble(role, text) {
+  const chatBox = document.getElementById('chatBox');
+
+  if (role === 'ai' && text.includes('[📝 Koreksi:')) {
+    const parts = text.split(/\[📝 Koreksi:/);
+    const mainText = parts[0].trim();
+    const correction = parts[1]?.replace(']', '').trim();
+
+    if (mainText) {
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-msg ai';
+      bubble.textContent = mainText;
+      chatBox.appendChild(bubble);
+    }
+    if (correction) {
+      const corrBubble = document.createElement('div');
+      corrBubble.className = 'chat-msg correction';
+      corrBubble.textContent = '📝 Koreksi: ' + correction;
+      chatBox.appendChild(corrBubble);
+    }
+  } else if (role === 'ai' && text.includes('[✅')) {
+    const parts = text.split(/\[✅[^\]]*\]/);
+    const mainText = parts[0].trim();
+    if (mainText) {
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-msg ai';
+      bubble.textContent = mainText;
+      chatBox.appendChild(bubble);
+    }
+    const okBubble = document.createElement('div');
+    okBubble.className = 'chat-msg correction';
+    okBubble.style.color = 'var(--accent4)';
+    okBubble.style.borderColor = 'rgba(102,187,106,0.3)';
+    okBubble.style.background = 'rgba(102,187,106,0.08)';
+    okBubble.textContent = '✅ Grammar bagus!';
+    chatBox.appendChild(okBubble);
+  } else {
+    const bubble = document.createElement('div');
+    bubble.className = `chat-msg ${role}`;
+    bubble.textContent = text;
+    chatBox.appendChild(bubble);
+  }
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+async function sendChatMsg() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  addChatBubble('user', text);
+  input.value = '';
+
+  chatHistory.push({ role: 'user', parts: [{ text }] });
+
+  // Add loading bubble
+  const loadingBubble = document.createElement('div');
+  loadingBubble.className = 'chat-msg ai';
+  loadingBubble.innerHTML = '<span style="color:var(--text-muted)">AI sedang mengetik...</span>';
+  document.getElementById('chatBox').appendChild(loadingBubble);
+
+  try {
+    const reply = await callGeminiChat(chatHistory);
+    loadingBubble.remove();
+    chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+    addChatBubble('ai', reply);
+  } catch (e) {
+    loadingBubble.remove();
+    addChatBubble('ai', '⚠️ Error: ' + e.message);
+  }
 }
 
 function handleChatEnter(e) {
@@ -1424,231 +1653,202 @@ function handleChatEnter(e) {
   }
 }
 
-async function sendChatMsg() {
-  const inp = document.getElementById('chatInput');
-  const txt = inp.value.trim();
-  if(!txt) return;
-
-  inp.value = '';
-  appendChatMsg('user', txt);
-
-  // Append a placeholder processing indicator inside chat
-  const box = document.getElementById('chatBox');
-  const loadingDiv = document.createElement('div');
-  loadingDiv.className = 'chat-msg ai';
-  loadingDiv.innerText = 'Thinking...';
-  box.appendChild(loadingDiv);
-  box.scrollTop = box.scrollHeight;
-
-  try {
-    // Structural constraints configuration embedded inside background engine
-    const systemInstruction = `Kamu adalah native speaker English partner dalam sesi roleplay percakapan interaktif. RESPON SELALU HARUS DALAM BAHASA INGGRIS. Jangan pernah gunakan bahasa Indonesia kecuali saat memberikan catatan koreksi grammar. Jawab dialog user dengan alami, pendek (maksimal 2-3 kalimat), lalu berikan pertanyaan lanjutan untuk memancing respons. \n\nKombinasikan responsmu dengan format rahasia berikut:\n[Isi respons bahasa Inggris kamu]\n\n---KOREKSI---\n(Berikan koreksi grammar super singkat khusus dari pesan terakhir user, HANYA JIKA ada salah grammar fatal. Jika tidak ada salah, kosongkan bagian di bawah garis) `;
-    
-    // Construct simplified history mapping structure safely
-    let geminiPayload = `System instruction constraints:\n${systemInstruction}\n\nFull Chat Context:\n`;
-    chatHistory.forEach(h => {
-      if(h.role !== 'system') geminiPayload += `${h.role === 'user'?'User':'AI'}: ${h.parts[0].text}\n`;
-    });
-
-    const aiRes = await callGemini(geminiPayload);
-    loadingDiv.remove();
-
-    // Parse specific pattern separators if returned by agent logic safely
-    let aiSpeech = aiRes;
-    let grammaticalCorrection = '';
-    
-    if(aiRes.includes('---KOREKSI---')) {
-      const parts = aiRes.split('---KOREKSI---');
-      aiSpeech = parts[0].trim();
-      grammaticalCorrection = parts[1].trim();
-    }
-
-    appendChatMsg('ai', aiSpeech);
-
-    if (grammaticalCorrection && grammaticalCorrection.length > 5) {
-      const corrDiv = document.createElement('div');
-      corrDiv.className = 'chat-msg correction';
-      corrDiv.innerText = `💡 Grammatical Feedback:\n${grammaticalCorrection}`;
-      box.appendChild(corrDiv);
-      box.scrollTop = box.scrollHeight;
-    }
-  } catch(e) { loadingDiv.innerText = 'Gagal memuat respons.'; }
-}
-
 async function endChat() {
   document.getElementById('chatCard').style.display = 'none';
-  const evalCard = document.getElementById('chatEvalCard');
+  document.getElementById('chatEvalCard').style.display = 'block';
+
   const out = document.getElementById('chatEvalOutput');
-  evalCard.style.display = 'block';
   out.textContent = '';
   out.classList.add('loading');
 
   try {
-    let dialogSummary = "";
-    chatHistory.forEach(h => { dialogSummary += `${h.role}: ${h.parts[0].text}\n`; });
-
-    const prompt = `Berikut adalah seluruh transkrip sesi percakapan simulasi interaktif bahasa Inggris yang baru saya lakukan:\n\n${dialogSummary}\n\nBerikan evaluasi menyeluruh objektif dalam Bahasa Indonesia: \n1. Apa kelebihan struktur pesan saya?\n2. Di mana kesalahan kosakata atau pola struktur yang terus berulang?\n3. Berikan rekomendasi 3 frasa ekspresi tingkat lanjut agar cara penyampaian saya terdengar jauh lebih profesional.`;
-    const res = await callGemini(prompt);
+    const convoText = chatHistory.filter(m => m.role === 'user' && !m.parts[0].text.startsWith('You are')).map(m => `User: ${m.parts[0].text}`).join('\n');
+    const result = await callGemini(
+      `Evaluasi sesi percakapan bahasa Inggris ini (skenario: ${currentScenario}):\n\n${convoText}\n\nBerikan evaluasi dalam bahasa Indonesia:\n1. **Overall Speaking Score** (1-10)\n2. **Fluency**: Kelancaran & alur percakapan\n3. **Vocabulary Usage**: Variasi & ketepatan kata\n4. **Communication Success**: Apakah pesan tersampaikan dengan baik\n5. **Top 3 Strengths**: Yang sudah bagus\n6. **Focus Area for Next Session**: 1 hal utama yang perlu dilatih\n7. **Skenario Recommended**: Skenario berikutnya yang cocok`
+    );
     out.classList.remove('loading');
-    out.textContent = res;
+    out.textContent = result;
     updateProgress('I');
-  } catch(e) { out.classList.remove('loading'); }
+  } catch (e) {
+    out.classList.remove('loading');
+    out.textContent = '❌ Error: ' + e.message;
+  }
 }
 
 function restartChat() {
-  document.getElementById('scenarioSelectorCard').style.display = 'block';
-  document.getElementById('chatCard').style.display = 'none';
   document.getElementById('chatEvalCard').style.display = 'none';
+  document.getElementById('scenarioSelectorCard').style.display = 'block';
+  document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('selected'));
 }
 
-// Speech Recognition Engine Wrapper
+// ========== SPEECH RECOGNITION ==========
+function initSpeechRecognition() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) return null;
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const rec = new SR();
+  rec.lang = 'en-US';
+  rec.continuous = false;
+  rec.interimResults = false;
+
+  rec.onresult = (e) => {
+    const transcript = e.results[0][0].transcript;
+    document.getElementById('chatInput').value = transcript;
+    toggleMicOff();
+    sendChatMsg();
+  };
+
+  rec.onerror = () => toggleMicOff();
+  rec.onend = () => { if (isRecording) toggleMicOff(); };
+
+  return rec;
+}
+
 function toggleMic() {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    showToast('Browser Anda tidak mendukung Web Speech API (Gunakan Chrome/Edge)', true);
-    return;
+  if (!recognition) recognition = initSpeechRecognition();
+  if (!recognition) { showToast('Browser tidak support speech recognition', true); return; }
+
+  if (isRecording) {
+    toggleMicOff();
+    recognition.stop();
+  } else {
+    isRecording = true;
+    document.getElementById('micBtn').classList.add('recording');
+    recognition.start();
   }
-
-  if (!speechRecognition) {
-    speechRecognition = new SpeechRecognition();
-    speechRecognition.continuous = false;
-    speechRecognition.lang = 'en-US';
-    speechRecognition.interimResults = false;
-
-    speechRecognition.onstart = () => {
-      isRecording = true;
-      document.getElementById('micBtn').classList.add('recording');
-    };
-
-    speechRecognition.onresult = (event) => {
-      const resultText = event.results[0][0].transcript;
-      document.getElementById('chatInput').value = resultText;
-    };
-
-    speechRecognition.onerror = (e) => {
-      console.error(e);
-      showToast(`Mic error: ${e.error}`, true);
-    };
-
-    speechRecognition.onend = () => {
-      isRecording = false;
-      document.getElementById('micBtn').classList.remove('recording');
-    };
-  }
-
-  if(isRecording) speechRecognition.stop();
-  else speechRecognition.start();
 }
 
-// Phase N: No-Filter Trial Core
-const targetChallenges = [
-  { id: 1, text: "Gunakan minimal 1 frasa transisi baru saat meeting kerja asli." },
-  { id: 2, text: "Tonton video Youtube English tanpa subtitle lalu rangkum lisan sendiri." },
-  { id: 3, text: "Ubah pengaturan bahasa di smartphone kamu total menjadi English." },
-  { id: 4, text: "Kirim voice note bahasa Inggris ke rekan kerja atau AI partner." }
+function toggleMicOff() {
+  isRecording = false;
+  const btn = document.getElementById('micBtn');
+  if (btn) btn.classList.remove('recording');
+}
+
+// ========== PHASE N: NO-FILTER TRIAL ==========
+const challenges = [
+  { text: 'Mulai 1 percakapan dalam bahasa Inggris dengan orang baru hari ini', icon: '🤝' },
+  { text: 'Ajukan opini/pertanyaan dalam English saat meeting atau diskusi kelompok', icon: '💼' },
+  { text: 'Tinggalkan review produk/restoran dalam bahasa Inggris', icon: '⭐' },
+  { text: 'Kirim email atau pesan profesional dalam bahasa Inggris', icon: '📧' },
+  { text: 'Tonton 15 menit konten English tanpa subtitle', icon: '📺' },
+  { text: 'Bergabung di komunitas online berbahasa Inggris dan kirim 1 pesan', icon: '🌐' },
+  { text: 'Jelaskan harimu dalam bahasa Inggris kepada teman/keluarga', icon: '👨‍👩‍👧' },
 ];
 
 function initChallenges() {
-  const list = document.getElementById('challengeList');
-  let checkedIds = JSON.parse(localStorage.getItem('sprint_challenges') || '[]');
-  
-  list.innerHTML = targetChallenges.map(c => {
-    const isChecked = checkedIds.includes(c.id);
-    return `
-      <li class="${isChecked?'checked':''}" onclick="toggleChallenge(${c.id})">
-        <div class="check-box">${isChecked?'✓':''}</div>
-        <div>${c.text}</div>
-      </li>
-    `;
-  }).join('');
+  const saved = JSON.parse(localStorage.getItem('sprint_challenges') || '[]');
+  document.getElementById('challengeList').innerHTML = challenges.map((c, i) => `
+    <li id="ch-${i}" class="${saved.includes(i) ? 'checked' : ''}" onclick="toggleChallenge(${i})">
+      <div class="check-box">${saved.includes(i) ? '✓' : ''}</div>
+      <span>${c.icon} ${c.text}</span>
+    </li>
+  `).join('');
 }
 
-function toggleChallenge(id) {
-  let checkedIds = JSON.parse(localStorage.getItem('sprint_challenges') || '[]');
-  if(checkedIds.includes(id)) {
-    checkedIds = checkedIds.filter(x => x !== id);
+function toggleChallenge(i) {
+  const saved = JSON.parse(localStorage.getItem('sprint_challenges') || '[]');
+  const li = document.getElementById(`ch-${i}`);
+  if (saved.includes(i)) {
+    saved.splice(saved.indexOf(i), 1);
+    li.classList.remove('checked');
+    li.querySelector('.check-box').textContent = '';
   } else {
-    checkedIds.push(id);
-    showToast('Tantangan diselesaikan! Selamat! 🎉');
+    saved.push(i);
+    li.classList.add('checked');
+    li.querySelector('.check-box').textContent = '✓';
+    showToast('Misi selesai! Keren! 🎉');
+    updateProgress('N');
   }
-  localStorage.setItem('sprint_challenges', JSON.stringify(checkedIds));
-  initChallenges();
-  updateProgress('N');
+  localStorage.setItem('sprint_challenges', JSON.stringify(saved));
 }
 
 async function getMentalPrep() {
-  const val = document.getElementById('prepInput').value.trim();
-  if(!val) { showToast('Masukkan deskripsi situasi nyata Anda dulu!', true); return; }
+  const input = document.getElementById('prepInput').value.trim();
+  if (!input) { showToast('Ceritakan situasinya dulu!', true); return; }
 
-  const area = document.getElementById('prepArea');
+  document.getElementById('prepArea').style.display = 'block';
   const out = document.getElementById('prepOutput');
-  area.style.display = 'block';
   out.textContent = '';
   out.classList.add('loading');
 
   try {
-    const prompt = `Saya akan menghadapi situasi nyata berikut dalam bahasa Inggris:\n\n"${val}"\n\nBerikan panduan strategi mental singkat agar tidak gugup, 3 frasa kunci penyelamat jika saya lupa kata, dan struktur pembuka obrolan yang elegan. Gunakan bahasa Indonesia padat langsung ke inti strategi.`;
-    const res = await callGemini(prompt);
+    const result = await callGemini(
+      `Seorang learner bahasa Inggris Indonesia akan menghadapi situasi nyata: "${input}"\n\nSiapkan mereka dengan (dalam bahasa Indonesia):\n\n1. **Strategi Mental**: Mindset yang tepat untuk situasi ini\n2. **5 Frasa Kunci**: Kalimat siap pakai yang paling mungkin dibutuhkan (tulis dalam Inggris dengan terjemahan)\n3. **Anticipated Questions**: 3 pertanyaan yang mungkin ditanyakan + cara menjawabnya\n4. **Panic Plan**: Kalau tiba-tiba blank, lakukan ini\n5. **Success Definition**: Ukuran "berhasil" yang realistis untuk situasi ini\n\nBuat mereka merasa prepared dan confident.`
+    );
     out.classList.remove('loading');
-    out.textContent = res;
-  } catch(e) { out.classList.remove('loading'); }
+    out.textContent = result;
+  } catch (e) {
+    out.classList.remove('loading');
+    out.textContent = '❌ Error: ' + e.message;
+  }
 }
 
 async function getDebrief() {
-  const val = document.getElementById('debriefInput').value.trim();
-  if(!val) { showToast('Ceritakan pengalaman Anda dulu!', true); return; }
+  const input = document.getElementById('debriefInput').value.trim();
+  if (!input) { showToast('Ceritakan pengalamannya dulu!', true); return; }
 
-  const area = document.getElementById('debriefArea');
+  document.getElementById('debriefArea').style.display = 'block';
   const out = document.getElementById('debriefOutput');
-  area.style.display = 'block';
   out.textContent = '';
   out.classList.add('loading');
 
   try {
-    const prompt = `Berikut debrief/laporan saya setelah terjun ke situasi nyata berbicara bahasa Inggris:\n\n"${val}"\n\nBerikan analisis objektif mengenai apa yang sudah bagus, solusi dari titik di mana saya merasa mentok, serta 1 area fokus perbaikan untuk aksi berikutnya. Bahasa Indonesia taktis.`;
-    const res = await callGemini(prompt);
+    const result = await callGemini(
+      `Seorang learner baru selesai melakukan percakapan nyata dalam bahasa Inggris. Cerita mereka:\n\n"${input}"\n\nBerikan debrief yang mendalam dalam bahasa Indonesia:\n\n1. **Apa yang Berjalan Baik**: Identifikasi keberhasilan konkret\n2. **Momen Kritis**: Analisis titik-titik penting (baik yang berhasil maupun yang mentok)\n3. **Root Cause**: Kenapa bagian yang sulit terjadi\n4. **Specific Fix**: Untuk setiap kesulitan, berikan latihan spesifik\n5. **Progress Marker**: Dibanding pemula, kamu sudah di level mana?\n6. **Next Mission**: Tantangan No-Filter Trial berikutnya yang sedikit lebih sulit\n\nCelebrate wins, tapi juga jujur tentang area improvement.`
+    );
     out.classList.remove('loading');
-    out.textContent = res;
-  } catch(e) { out.classList.remove('loading'); }
+    out.textContent = result;
+  } catch (e) {
+    out.classList.remove('loading');
+    out.textContent = '❌ Error: ' + e.message;
+  }
 }
 
-// Phase W: Weekly & Progress Dashboard Logic
-function initWeeklySchedule() {
-  const grid = document.getElementById('weekGrid');
-  const currentDayStr = new Date().toLocaleDateString('en-US', { weekday: 'short' });
+// ========== WEEKLY SCHEDULE ==========
+const weekData = [
+  { day: 'Sen', activities: ['S', 'P'], duration: '10 mnt', emoji: '💪' },
+  { day: 'Sel', activities: ['S', 'P'], duration: '10 mnt', emoji: '💪' },
+  { day: 'Rab', activities: ['S', 'P'], duration: '10 mnt', emoji: '💪' },
+  { day: 'Kam', activities: ['R'], duration: '5 mnt', emoji: '🎯' },
+  { day: 'Jum', activities: ['R'], duration: '5 mnt', emoji: '🎯' },
+  { day: 'Sab', activities: ['I'], duration: '15 mnt', emoji: '🤖' },
+  { day: 'Ming', activities: ['N'], duration: 'Bebas', emoji: '🌟' },
+];
 
-  grid.innerHTML = weeklySchedule.map(s => {
-    const isToday = s.day === currentDayStr;
-    return `
-      <div class="day-card ${isToday?'today':''}" onclick="showDayDetail('${s.day}')">
-        <div class="day-name">${s.day}</div>
-        <div class="day-activity">${s.day === 'Sun' ? '🎯' : '📝'}</div>
-        <div class="day-duration">${s.duration}</div>
-      </div>
-    `;
-  }).join('');
+function initWeekGrid() {
+  const today = new Date().getDay(); // 0=Sun, 1=Mon...
+  const dayMap = [6, 0, 1, 2, 3, 4, 5]; // convert JS day to our index
+
+  document.getElementById('weekGrid').innerHTML = weekData.map((d, i) => `
+    <div class="day-card ${dayMap[today] === i ? 'today' : ''}" onclick="switchPhase('${d.activities[0]}')">
+      <div class="day-name">${d.day}</div>
+      <div class="day-activity">${d.emoji}</div>
+      <div class="tag ${d.activities.map(a => `tag-${a.toLowerCase()}`).join(' ')}" style="display:inline-block;margin-bottom:4px">${d.activities.join('+')}</div>
+      <div class="day-duration">${d.duration}</div>
+    </div>
+  `).join('');
 }
 
-function showDayDetail(dayName) {
-  const s = weeklySchedule.find(x => x.day === dayName);
-  if(!s) return;
-  document.getElementById('dayDetailBox').style.display = 'block';
-  document.getElementById('detailDayName').innerText = `${dayName} — ${s.name}`;
-  document.getElementById('detailDayDesc').innerText = s.desc;
-}
+// ========== PROGRESS TRACKER ==========
+const progressPhases = [
+  { id: 'S', name: 'Shadowing', key: 'prog_S', color: 'var(--s-color)', target: 7 },
+  { id: 'P', name: 'Phrasal Bank', key: 'prog_P', color: 'var(--p-color)', target: 5 },
+  { id: 'R', name: 'Monologue', key: 'prog_R', color: 'var(--r-color)', target: 14 },
+  { id: 'I', name: 'Immersive', key: 'prog_I', color: 'var(--i-color)', target: 6 },
+  { id: 'N', name: 'No-Filter', key: 'prog_N', color: 'var(--n-color)', target: 7 },
+];
 
 function initProgressTracker() {
-  const area = document.getElementById('progressStatsArea');
-  area.innerHTML = progressPhases.map(p => {
-    const val = localStorage.getItem(p.key) || '0';
+  document.getElementById('progressTracker').innerHTML = progressPhases.map(p => {
+    const count = parseInt(localStorage.getItem(p.key) || '0');
+    const pct = Math.min(100, Math.round(count / p.target * 100));
     return `
       <div>
-        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
-          <span><span class="tag tag-${p.code.toLowerCase()}">${p.code}</span> ${p.name}</span>
-          <strong>${val} Kali</strong>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="font-size:14px;font-weight:600">${p.id} — ${p.name}</span>
+          <span style="font-size:13px;color:var(--text-muted)">${count}/${p.target} sesi · ${pct}%</span>
         </div>
         <div class="progress-bar-wrap">
-          <div class="progress-bar-fill" style="width: ${Math.min(parseInt(val)*10, 100)}%"></div>
+          <div class="progress-bar-fill" id="pbar-${p.id}" style="width:${pct}%;background:${p.color}"></div>
         </div>
       </div>
     `;
@@ -1663,12 +1863,12 @@ function updateProgress(phase) {
 }
 
 function resetProgress() {
-  if (!confirm('Apakah Anda yakin ingin mereset seluruh log aktivitas dan progres tantangan?')) return;
+  if (!confirm('Reset semua progress?')) return;
   progressPhases.forEach(p => localStorage.removeItem(p.key));
   localStorage.removeItem('sprint_challenges');
   initProgressTracker();
   initChallenges();
-  showToast('Seluruh progres dibersihkan! ✅');
+  showToast('Progress direset ✅');
 }
 
 async function askCoach() {
@@ -1682,12 +1882,13 @@ async function askCoach() {
 
   try {
     const result = await callGemini(
-      `Kamu adalah AI Coach speaking English terbaik untuk orang Indonesia. Seorang learner bertanya:\\n\\n\"${input}\"\\n\\nJawab dengan:\\n1. Analisis situasi mereka\\n2. Saran konkret dan actionable\\n3. Jadwal/rencana spesifik kalau relevan\\n4. Motivasi yang genuine (bukan klise)\\n\\nGunakan bahasa Indonesia yang friendly dan encouraging. Berikan jawaban yang benar-benar membantu, bukan generik.`
+      `Kamu adalah AI Coach speaking English terbaik untuk orang Indonesia. Seorang learner bertanya:\n\n"${input}"\n\nJawab dengan:\n1. Analisis situasi mereka\n2. Saran konkret dan actionable\n3. Jadwal/rencana spesifik kalau relevan\n4. Motivasi yang genuine (bukan klise)\n\nGunakan bahasa Indonesia yang friendly dan encouraging. Berikan jawaban yang benar-benar membantu, bukan generik.`
     );
     out.classList.remove('loading');
     out.textContent = result;
   } catch (e) {
     out.classList.remove('loading');
+    out.textContent = '❌ Error: ' + e.message;
   }
 }
 </script>
